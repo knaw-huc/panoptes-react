@@ -9,12 +9,13 @@ export interface DetailsResponse<B> {
 export function useDetails<B>(dataset: string, identifier: string): UseSuspenseQueryResult<DetailsResponse<B>> {
     return useSuspenseQuery({
         queryKey: ['details', dataset, identifier],
+        staleTime: 1000 * 60 * 5, // 5 minutes
         queryFn: () => details(dataset, identifier),
     });
 }
 
 async function details<B>(dataset: string, identifier: string): Promise<DetailsResponse<B>> {
-    const result = await fetch(`${getPanoptesUrl()}/datasets/${dataset}/details/${identifier}`);
+    const result = await fetch(`${getPanoptesUrl()}/api/datasets/${dataset}/details/${identifier}`);
 
     if (!result.ok) {
         throw new Error(`Failed to obtain details for ${identifier} in dataset ${dataset}!`);

@@ -9,7 +9,7 @@ export default function Facets() {
 
     return (
         <FacetsSection>
-            <HookedSearchFacet facetKey="q" label="Search for"/>
+            <HookedSearchFacet label="Search for"/>
 
             {facets.map((facet, index) =>
                 <FacetRendering key={index} facet={facet}/>)}

@@ -17,12 +17,13 @@ export interface FacetValue {
 export function fetchFacet(queryClient: QueryClient, dataset: string, request: FacetRequest) {
     return queryClient.fetchQuery({
         queryKey: ['facet', dataset, request.name, request.amount, request.filter, request.sort, request.facets],
+        staleTime: 1000 * 60 * 5, // 5 minutes
         queryFn: () => facet(dataset, request),
     });
 }
 
 async function facet(dataset: string, request: FacetRequest): Promise<FacetValue[]> {
-    const response = await fetch(`${getPanoptesUrl()}/datasets/${dataset}/facet`, {
+    const response = await fetch(`${getPanoptesUrl()}/api/datasets/${dataset}/facet`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

@@ -10,7 +10,7 @@ export default function useSearch(dataset: string) {
         const results = await fetchSearch(queryClient, dataset, {
             offset: pageSize * (state.page - 1),
             limit: pageSize,
-            query: state.facetValues.q ? state.facetValues.q[0] : '',
+            query: state.query || '',
             facets: state.facetValues,
         });
         return {items: results.items, total: results.amount};

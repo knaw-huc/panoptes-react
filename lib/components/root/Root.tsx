@@ -1,4 +1,6 @@
 import {Outlet} from '@tanstack/react-router';
+import {ReactQueryDevtools} from '@tanstack/react-query-devtools';
+import {TanStackRouterDevtools} from '@tanstack/react-router-devtools';
 import QueryStateBoundary from './QuerySateBoudary';
 import classes from './Root.module.css';
 
@@ -18,6 +20,9 @@ function PanoptesOutlet() {
     return (
         <QueryStateBoundary>
             <Outlet/>
+
+            <ReactQueryDevtools buttonPosition="bottom-left"/>
+            <TanStackRouterDevtools position="bottom-right"/>
         </QueryStateBoundary>
     );
 }

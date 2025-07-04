@@ -17,18 +17,29 @@ export default function Search() {
     return (
         <FacetedSearch searchFn={searchFn} pageSize={pageSize}>
             <div className={classes.search}>
-                <div className={classes.facets}>
-                    <Facets/>
-                </div>
-
-                <div className={classes.results}>
-                    <h2 className={classes.title}>Results</h2>
-
-                    <HookedSelectedFacets/>
-                    <HookedResultsView idKey="title" ResultComponent={ResultCardBasic}/>
-                    <HookedPagination/>
-                </div>
+                <SearchFacets/>
+                <SearchResults/>
             </div>
         </FacetedSearch>
+    );
+}
+
+function SearchFacets() {
+    return (
+        <div className={classes.facets}>
+            <Facets/>
+        </div>
+    );
+}
+
+function SearchResults() {
+    return (
+        <div className={classes.results}>
+            <h2 className={classes.title}>Results</h2>
+
+            <HookedSelectedFacets/>
+            <HookedResultsView idKey="title" ResultComponent={ResultCardBasic}/>
+            <HookedPagination/>
+        </div>
     );
 }

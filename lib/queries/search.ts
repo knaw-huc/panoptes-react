@@ -28,7 +28,7 @@ export async function fetchSearch(queryClient: QueryClient, dataset: string, req
 }
 
 async function search(dataset: string, request: SearchRequest): Promise<SearchResponse> {
-    const result = await fetch(`${getPanoptesUrl()}/datasets/${dataset}/search`, {
+    const result = await fetch(`${getPanoptesUrl()}/api/datasets/${dataset}/search`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
