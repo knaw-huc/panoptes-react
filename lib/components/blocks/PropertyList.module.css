@@ -6,13 +6,15 @@
 }
 
 .label {
+    grid-column: 1;
     font-weight: 700;
     font-size: 0.875rem;
     line-height: 1.25rem;
-    text-transform: uppercase;
+    text-transform: capitalize;
     color: #737373FF;
 }
 
 .value {
+    grid-column: 2;
     margin-bottom: 0.5rem;
 }

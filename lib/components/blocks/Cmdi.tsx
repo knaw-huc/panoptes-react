@@ -32,9 +32,11 @@ function mapToCmdiRecordData(
 
     if (content.type === 'Component') {
         const component = content as CmdiRecordContentComponent;
-        const values = records.map(r =>
-            Object.fromEntries(component.content.map(c =>
-                mapToCmdiRecordData(c, r.value as CmdiRecordElement[]))));
+        const values = records
+            .filter(r => Array.isArray(r.value))
+            .map(r =>
+                Object.fromEntries(component.content.map(c =>
+                    mapToCmdiRecordData(c, r.value as CmdiRecordElement[]))));
 
         return [content.attributes.label, values];
     }
