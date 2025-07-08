@@ -15,7 +15,7 @@ export default function useFacet(dataset: string, name: string) {
         });
 
         return results.map(result => ({
-            itemKey: name,
+            itemKey: result.value,
             label: result.value,
             amount: result.count
         }));

@@ -11,8 +11,8 @@ export default function Facets() {
         <FacetsSection>
             <HookedSearchFacet label="Search for"/>
 
-            {facets.map((facet, index) =>
-                <FacetRendering key={index} facet={facet}/>)}
+            {facets.map(facet =>
+                <FacetRendering key={facet.property} facet={facet}/>)}
         </FacetsSection>
     );
 }
