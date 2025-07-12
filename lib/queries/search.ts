@@ -23,6 +23,7 @@ export interface SearchResponseItem {
 export async function fetchSearch(queryClient: QueryClient, dataset: string, request: SearchRequest) {
     return queryClient.fetchQuery({
         queryKey: ['search', dataset, request.query, request.facets, request.offset, request.limit],
+        staleTime: 1000 * 60, // 1 minute
         queryFn: () => search(dataset, request),
     });
 }
