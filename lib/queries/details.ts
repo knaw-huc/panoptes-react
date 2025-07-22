@@ -14,7 +14,7 @@ export interface Block {
 
 export interface CmdiBlock extends Block {
     type: 'cmdi';
-    value: CmdiRecord[];
+    value: CmdiRecord;
 }
 
 export function useDetails(dataset: string, identifier: string): UseSuspenseQueryResult<DetailsResponse> {

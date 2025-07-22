@@ -9,7 +9,7 @@ export default function Facets() {
 
     return (
         <FacetsSection>
-            <HookedSearchFacet label="Search for"/>
+            <HookedSearchFacet/>
 
             {facets.map(facet =>
                 <FacetRendering key={facet.property} facet={facet}/>)}
@@ -32,8 +32,7 @@ function FacetRendering({facet}: { facet: Facet }) {
 
 function RangeFacetRendering({facet}: { facet: RangeFacet }) {
     return (
-        <HookedRangeFacet facetKey={facet.property} label={facet.name}
-                          min={facet.min} max={facet.max} step={facet.step}/>
+        <HookedRangeFacet facetKey={facet.property} min={facet.min} max={facet.max} step={facet.step}/>
     );
 }
 
@@ -42,6 +41,6 @@ function TextFacetRendering({facet}: { facet: TextFacet }) {
     const {fetchItemsFn} = useFacet(dataset, facet.property);
 
     return (
-        <HookedFilterFacet facetKey={facet.property} label={facet.name} fetchItemsFn={fetchItemsFn}/>
+        <HookedFilterFacet facetKey={facet.property} fetchItemsFn={fetchItemsFn}/>
     );
 }

@@ -21,8 +21,10 @@ function PanoptesOutlet() {
         <QueryStateBoundary>
             <Outlet/>
 
-            <ReactQueryDevtools buttonPosition="bottom-left"/>
-            <TanStackRouterDevtools position="bottom-right"/>
+            {import.meta.env.MODE !== 'production' && <>
+                <ReactQueryDevtools buttonPosition="bottom-left"/>
+                <TanStackRouterDevtools position="bottom-right"/>
+            </>}
         </QueryStateBoundary>
     );
 }
