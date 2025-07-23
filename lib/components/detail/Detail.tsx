@@ -1,48 +1,49 @@
-import {Fragment} from 'react';
-import {useParams} from '@tanstack/react-router';
-import {useDetails, CmdiBlock} from 'queries/details';
-import Cmdi from 'components/blocks/Cmdi';
+import {Link} from '@tanstack/react-router';
+import BlockLoader from 'components/blocks/BlockLoader';
+import useDataset from 'hooks/useDataset';
+import useDetails from 'hooks/useDetails';
+import usePanoptes from 'hooks/usePanoptes';
 import iconArrowLeft from 'assets/icon-arrow-left.svg';
 import classes from './Detail.module.css';
 
 export default function Detail() {
-    const {dataset, id} = useParams({from: '/$dataset/$id'});
-
     return (
         <div className={classes.detail}>
-            <DetailSide dataset={dataset}/>
-            <DetailMain dataset={dataset} id={id}/>
+            <DetailSide/>
+            <DetailMain/>
         </div>
     );
 }
 
-function DetailSide({dataset}: { dataset: string }) {
+function DetailSide() {
     return (
         <div className={classes.side}>
-            <BackToSearch dataset={dataset}/>
+            <BackToSearch/>
         </div>
     );
 }
 
-function DetailMain({dataset, id}: { dataset: string, id: string }) {
-    const {data: details} = useDetails(dataset, id);
+function DetailMain() {
+    const {data: details} = useDetails();
 
     return (
         <div className={classes.main}>
-            {details.item_data.map((item, index) => <Fragment key={index}>
-                {item.type === 'cmdi' && <Cmdi record={(item as CmdiBlock).value}/>}
-            </Fragment>)}
+            {details.item_data.map((block, index) =>
+                <BlockLoader key={index} block={block}/>)}
         </div>
     );
 }
 
-function BackToSearch({dataset}: { dataset: string }) {
+function BackToSearch() {
+    const {searchPath} = usePanoptes();
+    const [dataset] = useDataset('detail');
+
     return (
         <div className={classes.backToSearch}>
-            <a href={`/${dataset}`}>
+            <Link to={searchPath} params={{dataset}}>
                 <img src={iconArrowLeft} alt=""/>
                 Search
-            </a>
+            </Link>
         </div>
     );
 }

@@ -1,5 +1,4 @@
-import {QueryClient} from '@tanstack/react-query';
-import {getPanoptesUrl} from 'utils/panoptesUrl';
+import {QueryClient, queryOptions} from '@tanstack/react-query';
 
 export interface SearchRequest {
     offset: number;
@@ -20,16 +19,20 @@ export interface SearchResponseItem {
     tags: string[];
 }
 
-export async function fetchSearch(queryClient: QueryClient, dataset: string, request: SearchRequest) {
-    return queryClient.fetchQuery({
-        queryKey: ['search', dataset, request.query, request.facets, request.offset, request.limit],
+export function getSearchQueryOptions(api: string, dataset: string, request: SearchRequest) {
+    return queryOptions({
+        queryKey: ['search', api, dataset, request.query, request.facets, request.offset, request.limit],
         staleTime: 1000 * 60, // 1 minute
-        queryFn: () => search(dataset, request),
+        queryFn: () => search(api, dataset, request),
     });
 }
 
-async function search(dataset: string, request: SearchRequest): Promise<SearchResponse> {
-    const result = await fetch(`${getPanoptesUrl()}/api/datasets/${dataset}/search`, {
+export async function fetchSearch(api: string, queryClient: QueryClient, dataset: string, request: SearchRequest) {
+    return queryClient.fetchQuery(getSearchQueryOptions(api, dataset, request));
+}
+
+async function search(api: string, dataset: string, request: SearchRequest): Promise<SearchResponse> {
+    const result = await fetch(`${api}/api/datasets/${dataset}/search`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

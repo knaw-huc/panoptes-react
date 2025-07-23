@@ -1,32 +1,21 @@
-import {useSuspenseQuery, UseSuspenseQueryResult} from '@tanstack/react-query';
-import {getPanoptesUrl} from 'utils/panoptesUrl';
-import CmdiRecord from 'interfaces/cmdi.ts';
+import {queryOptions} from '@tanstack/react-query';
+import {Block} from 'components/blocks/BlockLoader';
 
 export interface DetailsResponse {
     item_id: string;
     item_data: Block[];
 }
 
-export interface Block {
-   type: string;
-   value: string | object | Block[];
-}
-
-export interface CmdiBlock extends Block {
-    type: 'cmdi';
-    value: CmdiRecord;
-}
-
-export function useDetails(dataset: string, identifier: string): UseSuspenseQueryResult<DetailsResponse> {
-    return useSuspenseQuery({
-        queryKey: ['details', dataset, identifier],
+export function getDetailsQueryOptions(api: string, dataset: string, identifier: string) {
+    return queryOptions({
+        queryKey: ['details', api, dataset, identifier],
         staleTime: 1000 * 60 * 5, // 5 minutes
-        queryFn: () => details(dataset, identifier),
+        queryFn: () => details(api, dataset, identifier),
     });
 }
 
-async function details(dataset: string, identifier: string): Promise<DetailsResponse> {
-    const result = await fetch(`${getPanoptesUrl()}/api/datasets/${dataset}/details/${identifier}`);
+async function details(api: string, dataset: string, identifier: string): Promise<DetailsResponse> {
+    const result = await fetch(`${api}/api/datasets/${dataset}/details/${identifier}`);
 
     if (!result.ok) {
         throw new Error(`Failed to obtain details for ${identifier} in dataset ${dataset}!`);

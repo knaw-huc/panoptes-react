@@ -1,5 +1,4 @@
-import {QueryClient} from '@tanstack/react-query';
-import {getPanoptesUrl} from 'utils/panoptesUrl';
+import {QueryClient, queryOptions} from '@tanstack/react-query';
 
 export interface FacetRequest {
     name: string;
@@ -14,16 +13,20 @@ export interface FacetValue {
     count: number;
 }
 
-export function fetchFacet(queryClient: QueryClient, dataset: string, request: FacetRequest) {
-    return queryClient.fetchQuery({
-        queryKey: ['facet', dataset, request.name, request.amount, request.filter, request.sort, request.facets],
+export function getFacetQueryOptions(api: string, dataset: string, request: FacetRequest) {
+    return queryOptions({
+        queryKey: ['facet', api, dataset, request.name, request.amount, request.filter, request.sort, request.facets],
         staleTime: 1000 * 60 * 5, // 5 minutes
-        queryFn: () => facet(dataset, request),
+        queryFn: () => facet(api, dataset, request),
     });
 }
 
-async function facet(dataset: string, request: FacetRequest): Promise<FacetValue[]> {
-    const response = await fetch(`${getPanoptesUrl()}/api/datasets/${dataset}/facet`, {
+export function fetchFacet(api: string, queryClient: QueryClient, dataset: string, request: FacetRequest) {
+    return queryClient.fetchQuery(getFacetQueryOptions(api, dataset, request));
+}
+
+async function facet(api: string, dataset: string, request: FacetRequest): Promise<FacetValue[]> {
+    const response = await fetch(`${api}/api/datasets/${dataset}/facet`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

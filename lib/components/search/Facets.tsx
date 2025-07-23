@@ -1,11 +1,10 @@
 import {FacetsSection, HookedSearchFacet, HookedRangeFacet, HookedFilterFacet} from '@knaw-huc/faceted-search-react';
-import {Facet, TextFacet, RangeFacet, useFacets} from 'queries/facets';
+import {Facet, TextFacet, RangeFacet} from 'queries/facets';
 import useFacet from 'hooks/useFacet';
-import useDataset from 'hooks/useDataset';
+import useFacets from 'hooks/useFacets';
 
 export default function Facets() {
-    const {dataset} = useDataset('/$dataset');
-    const {data: facets} = useFacets(dataset);
+    const {data: facets} = useFacets();
 
     return (
         <FacetsSection>
@@ -37,8 +36,7 @@ function RangeFacetRendering({facet}: { facet: RangeFacet }) {
 }
 
 function TextFacetRendering({facet}: { facet: TextFacet }) {
-    const {dataset} = useDataset('/$dataset');
-    const {fetchItemsFn} = useFacet(dataset, facet.property);
+    const {fetchItemsFn} = useFacet(facet.property);
 
     return (
         <HookedFilterFacet facetKey={facet.property} fetchItemsFn={fetchItemsFn}/>

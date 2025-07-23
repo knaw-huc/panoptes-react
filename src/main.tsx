@@ -1,9 +1,20 @@
-import {setPanoptesUrl, setupRouter} from '../lib';
+import {setupRouter} from '../lib';
 
-const panoptesUrlEnv = '$VITE_PANOPTES_URL';
-const panoptesUrl = panoptesUrlEnv.startsWith('$VITE_')
-    ? ('VITE_PANOPTES_URL' in import.meta.env ? import.meta.env.VITE_PANOPTES_URL : '')
-    : panoptesUrlEnv;
+const panoptesUrl = '$VITE_PANOPTES_URL';
+const panoptesIsEmbedded = '$VITE_PANOPTES_IS_EMBEDDED';
+const panoptesSearchPath = '$VITE_PANOPTES_SEARCH_PATH';
+const panoptesDetailPath = '$VITE_PANOPTES_DETAIL_PATH';
+const panoptesDataset = '$VITE_PANOPTES_DATASET';
 
-setPanoptesUrl(panoptesUrl);
-setupRouter(document.getElementById('root')!);
+const getVar = (envVariable: string): string | undefined =>
+    envVariable.startsWith('$VITE_')
+        ? (envVariable.slice(1) in import.meta.env ? import.meta.env[envVariable.slice(1)] : undefined)
+        : envVariable;
+
+setupRouter(document.getElementById('root')!, {
+    url: getVar(panoptesUrl),
+    isEmbedded: getVar(panoptesIsEmbedded) === 'true',
+    searchPath: getVar(panoptesSearchPath),
+    detailPath: getVar(panoptesDetailPath),
+    dataset: getVar(panoptesDataset),
+});

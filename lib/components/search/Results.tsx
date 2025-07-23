@@ -1,9 +1,13 @@
 import {ResultCardBasic, HookedResultsView} from '@knaw-huc/faceted-search-react';
-import useDataset from '../../hooks/useDataset.ts';
-import {SearchResponseItem} from '../../queries/search.ts';
+import {useRouter} from '@tanstack/react-router';
+import useDataset from 'hooks/useDataset';
+import usePanoptes from 'hooks/usePanoptes';
+import {SearchResponseItem} from 'queries/search';
 
 export default function Results() {
-    const {dataset} = useDataset('/$dataset');
+    const router = useRouter();
+    const {detailPath} = usePanoptes();
+    const [dataset] = useDataset('search');
 
     function basicCardMapper(result: SearchResponseItem): {
         title: string;
@@ -13,7 +17,7 @@ export default function Results() {
     } {
         return {
             title: result.title,
-            link: `/${dataset}/${result.id}`,
+            link: router.buildLocation({to: detailPath, params: {dataset, id: result.id}}).href,
             description: result.description,
             tags: result.tags,
         };

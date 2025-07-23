@@ -6,7 +6,7 @@ import Results from './Results';
 import classes from './Search.module.css';
 
 export default function Search() {
-    const {dataset} = useDataset('/$dataset');
+    const [dataset] = useDataset('search');
     const {searchFn, facets, pageSize} = useSearch(dataset);
 
     return (

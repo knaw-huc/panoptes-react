@@ -1,6 +1,8 @@
 import {useQueryClient} from '@tanstack/react-query';
 import {SearchResults, SearchState, Facets, getReadableRange} from '@knaw-huc/faceted-search-react';
-import {Facet, useFacets} from 'queries/facets';
+import useFacets from 'hooks/useFacets';
+import usePanoptes from 'hooks/usePanoptes';
+import {Facet} from 'queries/facets';
 import {fetchSearch, SearchResponseItem} from 'queries/search';
 
 function getReadable(facet: Facet): ((value: string) => string) | undefined {
@@ -13,8 +15,9 @@ function getReadable(facet: Facet): ((value: string) => string) | undefined {
 export default function useSearch(dataset: string) {
     const pageSize = 10;
     const queryClient = useQueryClient();
+    const {url} = usePanoptes();
+    const {data: registeredFacets} = useFacets();
 
-    const {data: registeredFacets} = useFacets(dataset);
     const facets = registeredFacets.reduce<Facets>((acc, facet) => {
         acc[facet.property] = {
             label: facet.name,
@@ -24,7 +27,7 @@ export default function useSearch(dataset: string) {
     }, {});
 
     async function searchFn(state: SearchState): Promise<SearchResults<SearchResponseItem>> {
-        const results = await fetchSearch(queryClient, dataset, {
+        const results = await fetchSearch(url, queryClient, dataset, {
             offset: pageSize * (state.page - 1),
             limit: pageSize,
             query: state.query || '',

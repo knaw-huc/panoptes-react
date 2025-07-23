@@ -1,0 +1,9 @@
+.spinner {
+    width: 6rem;
+    height: 6rem;
+    border: 0.5rem solid var(--color-support-001);
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    animation: rotation 1s linear infinite;
+}

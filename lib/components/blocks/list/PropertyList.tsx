@@ -3,7 +3,7 @@ import classes from './PropertyList.module.css';
 
 type PropertyListValue = PropertyListData | string | number;
 
-interface PropertyListData {
+export interface PropertyListData {
     [label: string]: PropertyListValue | PropertyListValue[];
 }
 

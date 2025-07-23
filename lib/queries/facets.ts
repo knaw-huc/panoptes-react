@@ -1,5 +1,4 @@
-import {useSuspenseQuery} from '@tanstack/react-query';
-import {getPanoptesUrl} from 'utils/panoptesUrl';
+import {queryOptions} from '@tanstack/react-query';
 
 export interface Facet {
     property: string;
@@ -18,16 +17,16 @@ export interface RangeFacet extends Facet {
     step: number;
 }
 
-export function useFacets(dataset: string) {
-    return useSuspenseQuery({
-        queryKey: ['facets', dataset],
+export function getFacetsQueryOptions(api: string, dataset: string) {
+    return queryOptions({
+        queryKey: ['facets', api, dataset],
         staleTime: 1000 * 60 * 30, // 30 minutes
-        queryFn: () => loadFacets(dataset)
+        queryFn: () => loadFacets(api, dataset)
     });
 }
 
-async function loadFacets(dataset: string): Promise<Facet[]> {
-    const response = await fetch(`${getPanoptesUrl()}/api/datasets/${dataset}/facets`);
+async function loadFacets(api: string, dataset: string): Promise<Facet[]> {
+    const response = await fetch(`${api}/api/datasets/${dataset}/facets`);
     if (!response.ok) {
         throw new Error(`Unable to fetch facets for dataset ${dataset}!`);
     }

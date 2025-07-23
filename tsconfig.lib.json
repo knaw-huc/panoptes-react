@@ -1,6 +1,8 @@
 {
   "extends": "./tsconfig.app.json",
-  "include": ["lib"],
+  "include": [
+    "lib"
+  ],
   "compilerOptions": {
     "paths": {
       "assets/*": [
@@ -8,6 +10,9 @@
       ],
       "components/*": [
         "./lib/components/*"
+      ],
+      "context/*": [
+        "./lib/context/*"
       ],
       "hooks/*": [
         "./lib/hooks/*"
@@ -17,9 +22,6 @@
       ],
       "queries/*": [
         "./lib/queries/*"
-      ],
-      "utils/*": [
-        "./lib/utils/*"
       ]
     }
   }
