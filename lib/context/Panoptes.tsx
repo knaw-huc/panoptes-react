@@ -1,7 +1,7 @@
 import {createContext, ReactNode} from 'react';
+import {RouteComponent} from '@tanstack/react-router';
 import Search from 'components/search/Search';
 import Detail from 'components/detail/Detail';
-import {RouteComponent} from '@tanstack/react-router';
 
 export interface PanoptesConfiguration {
     url: string;

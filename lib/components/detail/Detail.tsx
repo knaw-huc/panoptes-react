@@ -1,25 +1,22 @@
-import {Link} from '@tanstack/react-router';
 import BlockLoader from 'components/blocks/BlockLoader';
-import useDataset from 'hooks/useDataset';
+import * as DetailLayout from 'components/utils/DetailLayout';
+import BackToSearch from 'components/utils/BackToSearch';
 import useDetails from 'hooks/useDetails';
-import usePanoptes from 'hooks/usePanoptes';
-import iconArrowLeft from 'assets/icon-arrow-left.svg';
-import classes from './Detail.module.css';
 
 export default function Detail() {
     return (
-        <div className={classes.detail}>
+        <DetailLayout.Root>
             <DetailSide/>
             <DetailMain/>
-        </div>
+        </DetailLayout.Root>
     );
 }
 
 function DetailSide() {
     return (
-        <div className={classes.side}>
+        <DetailLayout.Side>
             <BackToSearch/>
-        </div>
+        </DetailLayout.Side>
     );
 }
 
@@ -27,23 +24,9 @@ function DetailMain() {
     const {data: details} = useDetails();
 
     return (
-        <div className={classes.main}>
-            {details.item_data.map((block, index) =>
-                <BlockLoader key={index} block={block}/>)}
-        </div>
-    );
-}
-
-function BackToSearch() {
-    const {searchPath} = usePanoptes();
-    const [dataset] = useDataset('detail');
-
-    return (
-        <div className={classes.backToSearch}>
-            <Link to={searchPath} params={{dataset}}>
-                <img src={iconArrowLeft} alt=""/>
-                Search
-            </Link>
-        </div>
+        <DetailLayout.Main>
+            {details.item_data.map((block, idx) =>
+                <BlockLoader key={idx} block={block}/>)}
+        </DetailLayout.Main>
     );
 }

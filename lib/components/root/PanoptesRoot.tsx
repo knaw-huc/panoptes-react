@@ -1,12 +1,12 @@
 import {Outlet} from '@tanstack/react-router';
 import {ReactQueryDevtools} from '@tanstack/react-query-devtools';
 import {TanStackRouterDevtools} from '@tanstack/react-router-devtools';
-import usePanoptes from 'hooks/usePanoptes';
-import Header from './Header';
 import QueryStateBoundary from './QuerySateBoudary';
-import classes from './Root.module.css';
+import Header from 'components/utils/Header';
+import usePanoptes from 'hooks/usePanoptes';
+import classes from './PanoptesRoot.module.css';
 
-export default function Root() {
+export default function PanoptesRoot() {
     const {isEmbedded} = usePanoptes();
 
     if (isEmbedded) {
@@ -15,7 +15,7 @@ export default function Root() {
 
     return (
         <div className={classes.root}>
-            <Header/>
+            <Header branding="Panoptes" navigation={{'/': 'Home'}}/>
             <PanoptesOutlet/>
         </div>
     );

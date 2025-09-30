@@ -5,7 +5,7 @@ import usePanoptes from 'hooks/usePanoptes';
 import {Facet} from 'queries/facets';
 import {fetchSearch, SearchResponseItem} from 'queries/search';
 
-function getReadable(facet: Facet): ((value: string) => string) | undefined {
+function getReadable(facet: Facet): ((value: string) => string | Promise<string>) | undefined {
     switch (facet.type) {
         case 'range':
             return getReadableRange;

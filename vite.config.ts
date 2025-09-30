@@ -11,24 +11,27 @@ export default defineConfig({
     plugins: [
         tsconfigPaths(),
         react(),
-        (!buildApp && dts({
-            rollupTypes: true,
-            tsconfigPath: 'tsconfig.lib.json',
-        })),
+        (!buildApp && dts({tsconfigPath: 'tsconfig.lib.json'})),
     ],
     build: (buildApp ? {
-        outDir: 'dist',
+        outDir: 'build',
     } : {
         lib: {
-            entry: resolve(__dirname, 'lib/index'),
+            entry: resolve(__dirname, 'lib/index.tsx'),
             formats: ['es'],
         },
         rollupOptions: {
-            external: ['react', 'react/jsx-runtime'],
+            external: [
+                'react', 'react-dom', 'react-dom/client', 'react/jsx-runtime',
+                '@tanstack/react-query', '@tanstack/react-router'
+            ],
             output: {
                 entryFileNames: '[name].js',
                 assetFileNames: 'assets/[name][extname]',
             }
         }
-    })
+    }),
+    esbuild: {
+        minifyIdentifiers: false
+    }
 });
