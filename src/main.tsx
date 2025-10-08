@@ -11,6 +11,10 @@ const getVar = (envVariable: string): string | undefined =>
         ? (envVariable.slice(1) in import.meta.env ? import.meta.env[envVariable.slice(1)] : undefined)
         : envVariable;
 
+if (getVar(panoptesUrl) === 'https://example.org') {
+    await (await import('./serverMock.ts')).default.start();
+}
+
 createPanoptesRoot(document.getElementById('root')!, {
     url: getVar(panoptesUrl),
     isEmbedded: getVar(panoptesIsEmbedded) === 'true',

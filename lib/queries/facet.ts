@@ -1,16 +1,18 @@
-import {QueryClient, queryOptions} from '@tanstack/react-query';
+import {queryOptions} from '@tanstack/react-query';
 
 export interface FacetRequest {
     name: string;
     amount: number;
     filter: string;
     sort: 'asc' | 'desc' | 'hits';
-    facets: { [key: string]: string[] };
+    facets: Record<string, string[]>;
 }
 
-export interface FacetValue {
+export interface FacetResult {
+    name?: string;
     value: string;
     count: number;
+    children?: FacetResult[];
 }
 
 export function getFacetQueryOptions(api: string, dataset: string, request: FacetRequest) {
@@ -21,11 +23,7 @@ export function getFacetQueryOptions(api: string, dataset: string, request: Face
     });
 }
 
-export function fetchFacet(api: string, queryClient: QueryClient, dataset: string, request: FacetRequest) {
-    return queryClient.fetchQuery(getFacetQueryOptions(api, dataset, request));
-}
-
-async function facet(api: string, dataset: string, request: FacetRequest): Promise<FacetValue[]> {
+async function facet(api: string, dataset: string, request: FacetRequest): Promise<FacetResult[]> {
     const response = await fetch(`${api}/api/datasets/${dataset}/facet`, {
         method: 'POST',
         headers: {
@@ -35,7 +33,7 @@ async function facet(api: string, dataset: string, request: FacetRequest): Promi
     });
 
     if (!response.ok) {
-        throw new Error(`Unable to fetch facet values for dataset ${dataset}!`);
+        throw new Error(`Unable to fetch facet results for dataset ${dataset}!`);
     }
 
     return response.json();

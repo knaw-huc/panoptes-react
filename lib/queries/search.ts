@@ -4,7 +4,7 @@ export interface SearchRequest {
     offset: number;
     limit: number;
     query: string;
-    facets: { [key: string]: string[] };
+    facets: Record<string, string[]>;
 }
 
 export interface SearchResponse {
