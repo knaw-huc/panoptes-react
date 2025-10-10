@@ -5,10 +5,10 @@ import usePanoptes from 'hooks/usePanoptes';
 import {Facet} from 'queries/facets';
 import {fetchSearch, SearchResponseItem} from 'queries/search';
 
-function getReadable(facet: Facet): ((value: string) => string | Promise<string>) | undefined {
+function getValueRenderer(facet: Facet): ((value: string, valueLabel?: string) => string) | undefined {
     switch (facet.type) {
         case 'range':
-            return getReadableRange;
+            return value => getReadableRange(value, false);
     }
 }
 
@@ -21,7 +21,7 @@ export default function useSearch(dataset: string) {
     const facets = registeredFacets.reduce<Facets>((acc, facet) => {
         acc[facet.property] = {
             label: facet.name,
-            getReadable: getReadable(facet),
+            valueRenderer: getValueRenderer(facet),
         };
         return acc;
     }, {});

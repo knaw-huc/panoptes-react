@@ -14,15 +14,24 @@ export function createPanoptesRoot(container: Container, configuration: Partial<
     queryClient ??= new QueryClient();
 
     return {
-        render: (children: ReactNode) => root.render(
-            <StrictMode>
-                <Panoptes configuration={configuration}>
-                    <QueryClientProvider client={queryClient}>
-                        {children}
-                    </QueryClientProvider>
-                </Panoptes>
-            </StrictMode>
-        ),
+        render: (children: ReactNode) =>
+            root.render(<PanoptesRoot configuration={configuration} queryClient={queryClient} children={children}/>),
         unmount: root.unmount
     };
+}
+
+function PanoptesRoot({configuration, queryClient, children}: {
+    configuration: Partial<PanoptesConfiguration>,
+    queryClient: QueryClient,
+    children: ReactNode
+}) {
+    return (
+        <StrictMode>
+            <Panoptes configuration={configuration}>
+                <QueryClientProvider client={queryClient}>
+                    {children}
+                </QueryClientProvider>
+            </Panoptes>
+        </StrictMode>
+    );
 }
