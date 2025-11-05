@@ -24,7 +24,7 @@ export function getFacetQueryOptions(api: string, dataset: string, request: Face
 }
 
 async function facet(api: string, dataset: string, request: FacetRequest): Promise<FacetResult[]> {
-    const response = await fetch(`${api}/api/datasets/${dataset}/facet`, {
+    const response = await fetch(`${api}/api/datasets/${dataset}/facet/${request.name}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

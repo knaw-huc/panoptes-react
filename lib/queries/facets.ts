@@ -3,7 +3,7 @@ import {queryOptions} from '@tanstack/react-query';
 export interface Facet {
     property: string;
     name: string;
-    type: 'text' | 'range';
+    type: 'text' | 'range' | 'tree';
 }
 
 export interface TextFacet extends Facet {

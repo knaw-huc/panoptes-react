@@ -29,6 +29,7 @@ function FacetRendering({facet}: { facet: Facet }) {
                 <RangeFacetRendering facet={facet as RangeFacet}/>
             );
         case 'text':
+        case 'tree':
             return (
                 <TextFacetRendering facet={facet as TextFacet}/>
             );
