@@ -15,8 +15,6 @@ if (getVar(panoptesUrl) === 'https://example.org') {
     await (await import('./serverMock.ts')).default.start();
 }
 
-import "@knaw-huc/faceted-search-react/iisg.css"
-
 createPanoptesRoot(document.getElementById('root')!, {
     url: getVar(panoptesUrl),
     isEmbedded: getVar(panoptesIsEmbedded) === 'true',

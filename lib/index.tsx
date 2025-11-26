@@ -1,11 +1,12 @@
 import {ReactNode, StrictMode} from 'react';
 import {Root, Container, createRoot} from 'react-dom/client';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
-import Panoptes, {PanoptesConfiguration} from 'context/Panoptes';
+import {Panoptes, PanoptesConfiguration} from 'context/index';
 import '@knaw-huc/faceted-search-react/style.css';
 
 export * from 'components/root';
 export * from 'components/utils';
+export * from 'context/index';
 export * from 'hooks/index';
 
 export function createPanoptesRoot(container: Container, configuration: Partial<PanoptesConfiguration> = {},
