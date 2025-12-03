@@ -4,7 +4,6 @@ export interface Facet {
     property: string;
     name: string;
     type: 'text' | 'range' | 'tree';
-    start_open: boolean;
 }
 
 export interface TextFacet extends Facet {
