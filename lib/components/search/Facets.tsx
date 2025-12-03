@@ -8,6 +8,7 @@ import {
 import {Facet, TextFacet, RangeFacet} from 'queries/facets';
 import useFacet from 'hooks/useFacet';
 import useFacets from 'hooks/useFacets';
+import usePanoptes from "hooks/usePanoptes.ts";
 
 export default function Facets() {
     const {data: facets} = useFacets();
@@ -23,6 +24,7 @@ export default function Facets() {
 }
 
 function FacetRendering({facet}: { facet: Facet }) {
+
     switch (facet.type) {
         case 'range':
             return (
@@ -37,15 +39,19 @@ function FacetRendering({facet}: { facet: Facet }) {
 }
 
 function RangeFacetRendering({facet}: { facet: RangeFacet }) {
+    const panoptes = usePanoptes();
     return (
-        <HookedRangeFacet facetKey={facet.property} min={facet.min} max={facet.max} step={facet.step}/>
+        <HookedRangeFacet facetKey={facet.property} min={facet.min} max={facet.max} step={facet.step}
+                          startOpen={Boolean(panoptes.facetsStartOpen)}/>
     );
 }
 
 function TextFacetRendering({facet}: { facet: TextFacet }) {
+    const panoptes = usePanoptes();
+
     return (
-        <HookedFilterFacet facetKey={facet.property}>
-            <TextFacetItemsRendering name={facet.property}/>
+        <HookedFilterFacet facetKey={facet.property} startOpen={Boolean(panoptes.facetsStartOpen)}>
+            <TextFacetItemsRendering name={facet.property} />
         </HookedFilterFacet>
     );
 }
@@ -54,6 +60,6 @@ function TextFacetItemsRendering({name}: { name: string }) {
     const {items} = useFacet(name);
 
     return (
-        <HookedFilterFacetItems items={items}/>
+        <HookedFilterFacetItems items={items} />
     );
 }

@@ -3,11 +3,15 @@ import {Root, Container, createRoot} from 'react-dom/client';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {Panoptes, PanoptesConfiguration} from 'context/index';
 import '@knaw-huc/faceted-search-react/style.css';
+import {initializeBlockRegistry} from "./components/blocks/BlockLoader.tsx";
 
 export * from 'components/root';
 export * from 'components/utils';
 export * from 'context/index';
 export * from 'hooks/index';
+
+// Initialize the Panoptes block registry, containing the default or standard renderers known to this library.
+initializeBlockRegistry();
 
 export function createPanoptesRoot(container: Container, configuration: Partial<PanoptesConfiguration> = {},
                                    queryClient?: QueryClient): Root {

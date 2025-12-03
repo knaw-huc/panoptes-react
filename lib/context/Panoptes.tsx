@@ -11,6 +11,7 @@ export interface PanoptesConfiguration {
     dataset?: string;
     searchComponent: RouteComponent;
     detailComponent: RouteComponent;
+    facetsStartOpen?: boolean;
 }
 
 export const PanoptesContext = createContext<PanoptesConfiguration | null>(null);
@@ -44,6 +45,7 @@ export default function Panoptes({configuration = {}, children}: {
         dataset: configuration.dataset,
         searchComponent: configuration.searchComponent || Search,
         detailComponent: configuration.detailComponent || Detail,
+        facetsStartOpen: configuration.facetsStartOpen,
     };
 
     return (
