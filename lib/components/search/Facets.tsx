@@ -42,7 +42,7 @@ function RangeFacetRendering({facet}: { facet: RangeFacet }) {
     const panoptes = usePanoptes();
     return (
         <HookedRangeFacet facetKey={facet.property} min={facet.min} max={facet.max} step={facet.step}
-                          startOpen={Boolean(panoptes.facetsStartOpen)}/>
+                          startOpen={Boolean(panoptes.facetsStartOpen) || true}/>
     );
 }
 
@@ -50,7 +50,7 @@ function TextFacetRendering({facet}: { facet: TextFacet }) {
     const panoptes = usePanoptes();
 
     return (
-        <HookedFilterFacet facetKey={facet.property} startOpen={Boolean(panoptes.facetsStartOpen)}>
+        <HookedFilterFacet facetKey={facet.property} startOpen={Boolean(panoptes.facetsStartOpen) || true}>
             <TextFacetItemsRendering name={facet.property} />
         </HookedFilterFacet>
     );

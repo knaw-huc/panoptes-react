@@ -1,88 +1,119 @@
-import React from "react";
-import {JsonBlock, JsonPrimitive} from "components/blocks/json/index.tsx";
+import { FC } from "react";
+import {useRouter} from "@tanstack/react-router";
+import ReactMarkdown from 'react-markdown'
+import rehypeSanitize from "rehype-sanitize";
+import rehypeRaw from "rehype-raw";
+import {Block, Schema} from "components/blocks/BlockLoader.tsx";
+import {getLinkTo, isLink, isMarkdownHTML, omitProperty} from "../../../schema/schemaSelectors.ts";
+import classes from './JsonBlockRenderer.module.css';
+import {
+    JsonData,
+    JsonSchema,
+    JsonDataItemValue,
+    ListBlock
+} from "components/blocks/json/index.tsx";
 
-function formatPrimitive(value: JsonPrimitive): string {
-    if (typeof value === "string") return `"${value}"`;
-    if (value === null) return "null";
-    return String(value);
+const isJsonBlock = (block: Block): block is ListBlock => {
+    return block.type === "json";
 }
 
-function colorForPrimitive(value: JsonPrimitive): string {
-    if (typeof value === "string") return "#0B7285";   // teal-ish
-    if (typeof value === "number") return "#5C940D";   // green-ish
-    if (typeof value === "boolean") return "#E67700";  // orange-ish
-    return "#868E96";                                  // gray for null
+/**
+ * Render  JSON property label, by doing some label manipulation in the function itself (no proper i18n)
+ */
+const JsonPropertyLabel = ({ label }: { label: string }) => {
+    return (
+        <dt className={classes.label}>
+            {label
+                .replace(/_/g, " ")
+                .replace(/([a-z])([A-Z][a-z])/g, "$1 $2")
+                .toLowerCase()
+                .replace(/^\w/, (c) => c.toUpperCase())}
+        </dt>
+    );
 }
 
-const indentSize = 16;
+const JsonPropertyListValue = ({ propKey, value, schema, model }:
+                                 { propKey: string, value: JsonDataItemValue; schema: JsonSchema, model: object }) => {
+    const router = useRouter();
 
-const JsonBlockRenderer: React.FC<JsonBlock> = ({
-                                                          value,
-                                                          label,
-                                                          level = 0,
-                                                      }: JsonBlock) => {
-    const indentStyle: React.CSSProperties = {
-        paddingLeft: level * indentSize,
-        fontFamily: "Menlo, Monaco, Consolas, 'Courier New', monospace",
-        fontSize: 13,
-        lineHeight: 1.4,
-    };
-
-    // Primitive
-    if (
-        typeof value === "string" ||
-        typeof value === "number" ||
-        typeof value === "boolean" ||
-        value === null
-    ) {
-        return (
-            <div style={indentStyle}>
-                {label && <span style={{ fontWeight: 600 }}>{label}: </span>}
-                <span style={{ color: colorForPrimitive(value) }}>
-          {formatPrimitive(value)}
-        </span>
-            </div>
-        );
+    if (value === null || value === '') {
+        return <span className={classes.empty} title="No value">—</span>;
     }
 
-    // Array
-    if (Array.isArray(value)) {
-        return (
-            <div style={indentStyle}>
-                {label && <span style={{ fontWeight: 600 }}>{label}: </span>}
-                <details open>
-                    <summary>[Array] ({value.length})</summary>
-                    <div>
-                        {value.map((item, index) => (
-                            <JsonBlockRenderer
-                                key={index}
-                                value={item}
-                                label={String(index)}
-                                level={level + 1}
-                            />
-                        ))}
-                    </div>
-                </details>
-            </div>
-        );
+    if (isLink(schema, propKey)) {
+        const link = router.buildLocation({
+                to: getLinkTo(schema, propKey),
+                params: model
+        }).href;
+
+        return (<a className={classes.link} href={link}>{value as string}</a>);
+    }
+    if (isMarkdownHTML(schema, propKey)) {
+        return (<ReactMarkdown rehypePlugins={[rehypeRaw, rehypeSanitize]}>
+                {value as string}
+            </ReactMarkdown>);
     }
 
-    // Object
-    const entries = Object.entries(value);
+    switch (typeof value) {
+        case "object":
+            return <Json data={value as JsonData} schema={schema as JsonSchema} />;
+        case "boolean":
+            return value ? "Yes" : "No";
+        case "number":
+            return value;
+
+        default:
+            return <pre className={classes.text}>{value}</pre>;
+    }
+}
+
+/**
+ * Render an JSON property value (this also recognizes arrays!)
+ *
+ * @param key       the prop key
+ * @param value     the prop value
+ * @param schema    the schema object
+ */
+const JsonPropertyValue = ({ propKey, value, schema, model }: { propKey: string, value: JsonDataItemValue; schema: Schema, model: object }) => {
+    const values = Array.isArray(value) ? value.length > 0 ? value : [null] : [value];
 
     return (
-        <div style={indentStyle}>
-            {label && <span style={{ fontWeight: 600 }}>{label}: </span>}
-            <details open>
-                <summary>{"{Object}"}</summary>
-                <div>
-                    {entries.map(([k, v]) => (
-                        <JsonBlockRenderer key={k} value={v} label={k} level={level + 1} />
+        <dd className={classes.value}>
+            {values.length > 1 ? (
+                <ul>
+                    {values.map((v, index) => (
+                        <li key={index}>
+                            <JsonPropertyListValue propKey={propKey} value={v} schema={schema} model={model} />
+                        </li>
                     ))}
-                </div>
-            </details>
-        </div>
+                </ul>
+            ) : (<JsonPropertyListValue propKey={propKey} value={values[0]} schema={schema} model={model} />)}
+        </dd>
     );
+}
+
+const Json = ({ data, schema }: { data: JsonData, schema: JsonSchema }) => {
+
+    return (
+        <dl className={classes.list}>
+            {Object.entries(data).map(([key, value]) => (!omitProperty(schema, key) && (
+                <div className={classes.item}>
+                    <JsonPropertyLabel label={key} />
+                    <JsonPropertyValue propKey={key} value={value} schema={schema} model={data} />
+                </div>
+            )))}
+        </dl>
+    );
+
+}
+
+const JsonBlockRenderer: FC<{ block: Block }> = ({ block }) => {
+    if (!isJsonBlock(block)) {
+        console.error("JsonBlockRenderer used with non-JSON block:", block);
+        return null;
+    }
+
+    return <Json data={block.value} schema={block.schema} />;
 };
 
 export default JsonBlockRenderer;

@@ -1,16 +1,29 @@
+import {Block} from "components/blocks/BlockLoader.tsx";
+import {PropertyListData} from "components/blocks/list/PropertyList.tsx";
 import JsonBlockRenderer from "components/blocks/json/JsonBlockRenderer.tsx";
 
-export type JsonPrimitive = string | number | boolean | null;
-export type JsonValue = JsonPrimitive | JsonValue[] | { [key: string]: JsonValue };
+export type JsonData = Record<string, any>;
 
-export interface JsonBlock {
-    value: JsonValue;
-    label?: string;
-    level?: number;
+export type JsonSchema = Record<string, any>;
+
+type JsonDataValue =
+    | JsonData
+    | string
+    | number
+    | boolean
+    | null;
+
+export type JsonDataItemValue =
+    | JsonDataValue
+    | JsonDataValue[];
+
+export interface ListBlock extends Block {
+    type: "json";
+    value: PropertyListData;
 }
 
-const RenderJsonBlock = ({block}: { block: JsonBlock }) => {
-    return (<JsonBlockRenderer value={block.value} />);
+const RenderEntity = ({ block }: { block: Block }) => {
+    return (<JsonBlockRenderer block={block} />);
 };
 
-export default RenderJsonBlock;
+export default RenderEntity;
