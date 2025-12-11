@@ -1,27 +1,18 @@
 import {ReactNode} from 'react';
 import classes from './Header.module.css';
+import NavigationBar from "./NavigationBar.tsx";
 
-export default function Header({branding, navigation}: { branding: ReactNode, navigation: Record<string, string> }) {
+export default function Header({branding}: { branding: ReactNode }) {
+
     return (
         <header className={classes.header}>
             <div className={classes.content}>
                 <div className={classes.branding}>
-                    <a href="/">
-                        {branding}
-                    </a>
+                    <a href="/">{branding}</a>
                 </div>
-
-                <HeaderNavigation navigation={navigation}/>
+                <NavigationBar />
             </div>
         </header>
     );
-}
 
-function HeaderNavigation({navigation}: { navigation: Record<string, string> }) {
-    return (
-        <nav className={classes.navigation} aria-label="Main site navigation">
-            {Object.entries(navigation).map(([href, label]) =>
-                <a key={href} href={href}>{label}</a>)}
-        </nav>
-    );
 }

@@ -4,3 +4,6 @@ export {default as useFacet} from './useFacet';
 export {default as useFacets} from './useFacets';
 export {default as usePanoptes} from './usePanoptes';
 export {default as useSearch} from './useSearch';
+export {default as useDatasets} from './useDatasets';
+export {default as useTranslations} from './useTranslations';
+export {default as useLocale} from './useLocale';

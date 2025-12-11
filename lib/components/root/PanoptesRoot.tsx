@@ -15,7 +15,7 @@ export default function PanoptesRoot() {
 
     return (
         <div className={classes.root}>
-            <Header branding="Panoptes" navigation={{'/': 'Home'}}/>
+            <Header branding="Panoptes" />
             <PanoptesOutlet/>
         </div>
     );

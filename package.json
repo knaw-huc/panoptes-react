@@ -22,7 +22,8 @@
     "build": " vite build",
     "build:app": "BUILD_APP=true vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "vitest"
   },
   "dependencies": {
     "@knaw-huc/faceted-search-react": "^0.0.8",

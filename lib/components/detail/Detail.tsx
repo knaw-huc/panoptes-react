@@ -1,7 +1,7 @@
 import BlockLoader from 'components/blocks/BlockLoader';
 import * as DetailLayout from 'components/utils/DetailLayout';
-import BackToSearch from 'components/utils/BackToSearch';
 import useDetails from 'hooks/useDetails';
+import BackLink from "components/utils/BackLink.tsx";
 
 export default function Detail() {
     return (
@@ -15,7 +15,7 @@ export default function Detail() {
 function DetailSide() {
     return (
         <DetailLayout.Side>
-            <BackToSearch/>
+            <BackLink/>
         </DetailLayout.Side>
     );
 }

@@ -1,0 +1,20 @@
+.navigation {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    a {
+        padding-inline: 1rem;
+        padding-block: 0.5rem;
+        border-radius: 0.25rem;
+        text-decoration-line: none;
+
+        transition-property: background-color;
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        transition-duration: 150ms;
+
+        @media (hover: hover) {
+            background-color: var(--color-support-001);
+        }
+    }
+}
