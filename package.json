@@ -20,7 +20,7 @@
   "scripts": {
     "dev": "vite",
     "build": " vite build",
-    "build:app": "BUILD_APP=true vite build",
+    "build:app": "cross-env BUILD_APP=true vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest"
@@ -28,12 +28,12 @@
   "dependencies": {
     "@knaw-huc/faceted-search-react": "^0.0.8",
     "msw": "^2.11.5",
-    "react-error-boundary": "^6.0.0",
     "radash": "^12.1.1",
+    "react-error-boundary": "^6.0.0",
+    "react-intl": "^7.1.14",
     "react-markdown": "^10.1.0",
     "rehype-raw": "^7.0.0",
-    "rehype-sanitize": "^6.0.0",
-    "react-intl": "^7.1.14"
+    "rehype-sanitize": "^6.0.0"
   },
   "peerDependencies": {
     "@tanstack/react-query": "5",
@@ -51,6 +51,8 @@
     "@types/react": "^19.1.13",
     "@types/react-dom": "^19.1.9",
     "@vitejs/plugin-react": "^5.0.3",
+    "baseline-browser-mapping": "^2.9.7",
+    "cross-env": "^10.1.0",
     "eslint": "^9.31.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
