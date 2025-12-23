@@ -4,7 +4,7 @@ import ReactMarkdown from 'react-markdown'
 import rehypeSanitize from "rehype-sanitize";
 import rehypeRaw from "rehype-raw";
 import {Block, Schema} from "components/blocks/BlockLoader.tsx";
-import {getLinkTo, isLink, isMarkdownHTML, omitProperty} from "../../../schema/schemaSelectors.ts";
+import {getLinkTo, isExternalLink, isLink, isMarkdownHTML, omitProperty} from "../../../schema/schemaSelectors.ts";
 import classes from './JsonBlockRenderer.module.css';
 import {
     JsonData,
@@ -12,13 +12,14 @@ import {
     JsonDataItemValue,
     ListBlock
 } from "components/blocks/json/index.tsx";
+import {get} from "radash";
 
 const isJsonBlock = (block: Block): block is ListBlock => {
     return block.type === "json";
 }
 
 /**
- * Render  JSON property label, by doing some label manipulation in the function itself (no proper i18n)
+ * Render JSON property label, by doing some label manipulation in the function itself (no proper i18n)
  */
 const JsonPropertyLabel = ({ label }: { label: string }) => {
     return (
@@ -40,15 +41,17 @@ const JsonPropertyListValue = ({ propKey, value, schema, model }:
         return <span className={classes.empty} title="No value">—</span>;
     }
 
-    if (isLink(schema, propKey)) {
+    if (isExternalLink(schema, propKey)) {
+        const uri = get(model, propKey, '');
+        return (<a className={classes.link} href={uri} target="_blank" rel="noopener noreferrer">{uri}</a>);
+    } else if (isLink(schema, propKey)) {
         const link = router.buildLocation({
                 to: getLinkTo(schema, propKey),
                 params: model
         }).href;
 
         return (<a className={classes.link} href={link}>{value as string}</a>);
-    }
-    if (isMarkdownHTML(schema, propKey)) {
+    } else if (isMarkdownHTML(schema, propKey)) {
         return (<ReactMarkdown rehypePlugins={[rehypeRaw, rehypeSanitize]}>
                 {value as string}
             </ReactMarkdown>);

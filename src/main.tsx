@@ -1,3 +1,5 @@
+import '@knaw-huc/faceted-search-react/huygens.css';
+
 import {createPanoptesRoot, PanoptesRouterProvider} from '../lib';
 
 const panoptesUrl = '$VITE_PANOPTES_URL';
