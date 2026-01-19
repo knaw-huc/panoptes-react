@@ -1,0 +1,13 @@
+{
+  "panoptes.back": "Terug",
+  "faceted-search-react.search.facet.label": "Zoeken naar tekst",
+  "faceted-search-react.filter.facet.orderAsc": "Sorteren (A-Z)",
+  "faceted-search-react.filter.facet.orderDesc": "Sorteren (Z-A)",
+  "faceted-search-react.filter.facet.orderHits": "Sorteren (Aantal hits)",
+  "faceted-search-react.pagination.previousPage": "Vorige",
+  "faceted-search-react.pagination.nextPage": "Volgende",
+  "faceted-search-react.selected.facets.selectedFilters": "Geselecteerde filters:",
+  "faceted-search-react.selected.facets.clearFilters": "Filters verwijderen",
+  "faceted-search-react.filter.facet.placeHolder": "Tik om te filteren",
+  "faceted-search-react.facets.toggle.button.searchFilters": "Zoekfilters"
+}

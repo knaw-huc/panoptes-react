@@ -1,0 +1,14 @@
+{
+  "panoptes.back": "Back",
+  "faceted-search-react.search.facet.label": "Search for text",
+  "faceted-search-react.search.faceted.facets.clearAll": "Clear all",
+  "faceted-search-react.filter.facet.orderAsc": "Order from A-Z",
+  "faceted-search-react.filter.facet.orderDesc": "Order from Z-A",
+  "faceted-search-react.filter.facet.orderHits": "Order by amount of results",
+  "faceted-search-react.pagination.previousPage": "Previous",
+  "faceted-search-react.pagination.nextPage": "Next",
+  "faceted-search-react.selected.facets.selectedFilters": "Selected filters:",
+  "faceted-search-react.selected.facets.clearFilters": "Clear filters",
+  "faceted-search-react.filter.facet.placeHolder": "Type to filter",
+  "faceted-search-react.facets.toggle.button.searchFilters": "Search filters"
+}
