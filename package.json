@@ -15,7 +15,8 @@
     "dist"
   ],
   "sideEffects": [
-    "**/*.css"
+    "**/*.css",
+    "src/i18n/i18n.ts"
   ],
   "scripts": {
     "dev": "vite",
@@ -27,7 +28,6 @@
   "dependencies": {
     "@knaw-huc/faceted-search-react": "^0.0.9",
     "i18next-browser-languagedetector": "^8.2.0",
-    "i18next-http-backend": "^3.0.2",
     "msw": "^2.11.5",
     "radash": "^12.1.1",
     "react-error-boundary": "^6.0.0",
