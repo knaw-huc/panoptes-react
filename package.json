@@ -19,7 +19,7 @@
   ],
   "scripts": {
     "dev": "vite",
-    "build": " vite build",
+    "build": "vite build",
     "build:app": "BUILD_APP=true vite build",
     "lint": "eslint .",
     "preview": "vite preview"
@@ -27,6 +27,7 @@
   "dependencies": {
     "@knaw-huc/faceted-search-react": "^0.0.9",
     "i18next-browser-languagedetector": "^8.2.0",
+    "i18next-http-backend": "^3.0.2",
     "msw": "^2.11.5",
     "radash": "^12.1.1",
     "react-error-boundary": "^6.0.0",

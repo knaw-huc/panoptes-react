@@ -12,11 +12,7 @@ import BlockLoader, { blocks } from "../BlockLoader.tsx";
 import {get} from "radash";
 import GhostLine from "components/utils/GhostLine.tsx";
 
-
 const isJsonBlock = (block: JsonBlock) => block.type === "json";
-
-const isPlainObject = (v: unknown): v is Record<string, unknown> =>
-    typeof v === "object" && v !== null && !Array.isArray(v);
 
 /** humanize "some_keyName" -> "Some key name" (same behavior as your current component) */
 const humanizeLabel = (label: string) =>
@@ -25,12 +21,6 @@ const humanizeLabel = (label: string) =>
         .replace(/([a-z])([A-Z][a-z])/g, "$1 $2")
         .toLowerCase()
         .replace(/^\w/, (c) => c.toUpperCase());
-
-/** Safe getter for object properties by key (no deep paths) */
-const getProp = (model: JsonValue, propKey: string): JsonValue => {
-    if (isPlainObject(model)) return (model as any)[propKey] ?? null;
-    return null;
-};
 
 type SchemaLike = JsonSchema | undefined | null;
 
