@@ -1,26 +1,23 @@
-import {FacetedSearch, HookedSelectedFacets, HookedPagination, I18nProvider} from '@knaw-huc/faceted-search-react';
+import {FacetedSearch, HookedSelectedFacets, HookedPagination} from '@knaw-huc/faceted-search-react';
 import useSearch from 'hooks/useSearch';
 import useDataset from 'hooks/useDataset';
 import Facets from './Facets';
 import Results from './Results';
 import classes from './Search.module.css';
-import useTranslate from "hooks/useTranslate.ts";
-
+import usePanoptes from "hooks/usePanoptes.ts";
 
 export default function Search() {
     const [dataset] = useDataset('search');
     const {searchFn, facets, pageSize} = useSearch(dataset);
-    const translate = useTranslate();
+    const {translateFn} = usePanoptes();
 
     return (
-        <I18nProvider translate={translate}>
-            <FacetedSearch facets={facets} searchFn={searchFn} pageSize={pageSize}>
-                <div className={classes.search}>
-                    <SearchFacets/>
-                    <SearchResults/>
-                </div>
-            </FacetedSearch>
-        </I18nProvider>
+        <FacetedSearch facets={facets} searchFn={searchFn} pageSize={pageSize} translate={translateFn}>
+            <div className={classes.search}>
+                <SearchFacets/>
+                <SearchResults/>
+            </div>
+        </FacetedSearch>
     );
 }
 
