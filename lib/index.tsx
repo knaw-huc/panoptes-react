@@ -6,6 +6,7 @@ import '@knaw-huc/faceted-search-react/style.css';
 
 export * from 'components/root';
 export * from 'components/utils';
+export * from 'components/blocks/Block';
 export * from 'context/index';
 export * from 'hooks/index';
 

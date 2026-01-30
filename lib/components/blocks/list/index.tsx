@@ -1,4 +1,4 @@
-import {Block} from 'components/blocks/BlockLoader';
+import Block from 'components/blocks/Block';
 import PropertyList, {PropertyListData} from 'components/blocks/list/PropertyList';
 
 export interface ListBlock extends Block {
