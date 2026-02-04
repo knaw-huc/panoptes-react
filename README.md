@@ -50,16 +50,16 @@ If `VITE_PANOPTES_URL` resolves to https://example.org, the application will sta
 To use this library, you will have to set up TanStack Query and wrap the application tree with the `Panoptes` context.
 This context contains the configuration for the application:
 
-| Parameter         | Value type       | Required? | Default value | Description                                                                                                                                                   |
-|-------------------|------------------|-----------|---------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `url`             | `string`         | ✓         |               | Base URL of the Panoptes backend                                                                                                                              |
-| `isEmbedded`      | `boolean`        |           | `false`       | `true` to run in embedded mode, else `false` for rendering a menu bar at the top of the page                                                                  |
-| `searchPath`      | `string`         | ✓         |               | Route for search page; it must include the dataset parameter `$dataset` unless the dataset is configured globally                                             |
-| `detailPath`      | `string`         | ✓         |               | Route for detail page; it must include the dataset parameter `$dataset` unless the dataset is configured globally, and it must include the id parameter `$id` |
-| `dataset`         | `string`         |           |               | Optional dataset identifier to use globally for all routes                                                                                                    |
-| `searchComponent` | `RouteComponent` |           |               | Replace the default `Search` component with a custom React component                                                                                          |
-| `detailComponent` | `RouteComponent` |           |               | Replace the default `Detail` component with a custom React component                                                                                          |
-| `blocks`          | `Block[]`        |           |               | (TODO) Add additional `Block`s to Panoptes for customized rendering, see [Blocks](#blocks)                                                                    |
+| Parameter         | Value type                          | Required? | Default value | Description                                                                                                                                                   |
+|-------------------|-------------------------------------|-----------|---------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `url`             | `string`                            | ✓         |               | Base URL of the Panoptes backend                                                                                                                              |
+| `isEmbedded`      | `boolean`                           |           | `false`       | `true` to run in embedded mode, else `false` for rendering a menu bar at the top of the page                                                                  |
+| `searchPath`      | `string`                            | ✓         |               | Route for search page; it must include the dataset parameter `$dataset` unless the dataset is configured globally                                             |
+| `detailPath`      | `string`                            | ✓         |               | Route for detail page; it must include the dataset parameter `$dataset` unless the dataset is configured globally, and it must include the id parameter `$id` |
+| `dataset`         | `string`                            |           |               | Optional dataset identifier to use globally for all routes                                                                                                    |
+| `searchComponent` | `RouteComponent`                    |           |               | Replace the default `Search` component with a custom React component                                                                                          |
+| `detailComponent` | `RouteComponent`                    |           |               | Replace the default `Detail` component with a custom React component                                                                                          |
+| `blocks`          | `Map<string, FC<{ block: Block }>>` |           |               | Add additional `Block`s to Panoptes for customized rendering using the Block `type` as key, see [Blocks](#blocks)                                             |
 
 You can use the `createPanoptesRoot` helper as an alternative for
 `createRoot` ([see React docs](https://react.dev/reference/react-dom/client/createRoot)) to create a root element for
@@ -74,14 +74,24 @@ context.
 Example setup:
 
 ```tsx
-import {createPanoptesRoot, PanoptesRouterProvider} from '@knaw-huc/panoptes-react';
+import {createPanoptesRoot, PanoptesRouterProvider, Block} from '@knaw-huc/panoptes-react';
+
+interface HelloBlock extends Block {
+    type: 'hello';
+    value: string;
+}
+
+function HelloBlockComponent({block}: { block: HelloBlock }) {
+    return <p>Hello {block.value}!</p>;
+}
 
 const root = createPanoptesRoot(document.getElementById('root')!, {
     url: 'https://your-panoptes.example.org',
     isEmbedded: false,
     searchPath: '/search',
     detailPath: '/detail/$id',
-    dataset: 'your-dataset-id'
+    dataset: 'your-dataset-id',
+    blocks: new Map([['hello', HelloBlockComponent]]),
 });
 
 root.render(<PanoptesRouterProvider/>);
@@ -143,21 +153,22 @@ type BlockValue = string | object | Block[];
 interface Block {
     type: string;
     value: BlockValue;
+    config?: object;
 }
 ```
 
-A block consists of a `type` and a `value`. The `type` determines the rendering of the block. The value is passed to the
-block component as a property. A simple block component could look like this:
+A block consists of a `type`, a `value` and sometimes `config`. The `type` determines the rendering of the block. The
+value and the config are passed to the block component as properties. A simple block component could look like this:
 
 ```tsx
 interface HelloWorldBlock extends Block {
     type: 'hello_world';
-    value: {hello?: string};
+    value: { hello?: string };
 }
 
 function RenderHelloWorld({block}: { block: HelloWorldBlock }) {
     return (
-        <h1>Hello ${block.value.hello || 'World'}</h1>
+        <h1>Hello {block.value.hello || 'World'}</h1>
     );
 }
 ```

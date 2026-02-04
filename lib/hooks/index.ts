@@ -1,3 +1,4 @@
+export {default as useBlock} from './useBlock';
 export {default as useDataset} from './useDataset';
 export {default as useDetails} from './useDetails';
 export {default as useFacet} from './useFacet';
