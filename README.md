@@ -59,7 +59,7 @@ This context contains the configuration for the application:
 | `dataset`         | `string`                            |           |               | Optional dataset identifier to use globally for all routes                                                                                                    |
 | `searchComponent` | `RouteComponent`                    |           |               | Replace the default `Search` component with a custom React component                                                                                          |
 | `detailComponent` | `RouteComponent`                    |           |               | Replace the default `Detail` component with a custom React component                                                                                          |
-| `blocks`          | `Map<string, FC<{ block: Block }>>` |           |               | Add additional `Block`s to Panoptes for customized rendering, see [Blocks](#blocks)                                                                           |
+| `blocks`          | `Map<string, FC<{ block: Block }>>` |           |               | Add additional `Block`s to Panoptes for customized rendering using the Block `type` as key, see [Blocks](#blocks)                                             |
 
 You can use the `createPanoptesRoot` helper as an alternative for
 `createRoot` ([see React docs](https://react.dev/reference/react-dom/client/createRoot)) to create a root element for
