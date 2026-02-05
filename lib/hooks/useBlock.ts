@@ -6,12 +6,8 @@ const blocks = import.meta.glob('../components/blocks/*/index.tsx') as Record<st
     default: FC<{ block: Block }>
 }>>;
 
-export default function useBlock(block: Block | null | undefined): FC<{ block: Block }> | undefined {
+export default function useBlock(block: Block): FC<{ block: Block }> {
     const {blocks: customBlocks} = usePanoptes();
-
-    if (!block?.type) {
-        return undefined;
-    }
 
     const importer = blocks[`../components/blocks/${block.type}/index.tsx`];
     if (importer) {
@@ -22,5 +18,5 @@ export default function useBlock(block: Block | null | undefined): FC<{ block: B
         return customBlocks.get(block.type) as FC<{ block: Block }>;
     }
 
-    return undefined;
+    throw new Error(`Unknown block: ${block.type}`);
 }

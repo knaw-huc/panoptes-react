@@ -1,4 +1,5 @@
 import JsonBlockRenderer from "components/blocks/json/JsonBlockRenderer.tsx";
+import {Block} from "components/blocks";
 
 export type JsonPrimitive = string | number | boolean | null;
 export type JsonValue = JsonPrimitive | JsonObject | JsonArray;
@@ -7,7 +8,7 @@ export type JsonArray = JsonValue[];
 export type JsonData = JsonValue;
 export type JsonSchema = JsonObject;
 
-export interface JsonBlock {
+export interface JsonBlock extends Block {
     type: "json";
     value: JsonData;
     config: JsonSchema;

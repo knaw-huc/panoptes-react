@@ -1,7 +1,7 @@
-import {Block} from "components/blocks/BlockLoader.tsx";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import rehypeSanitize from "rehype-sanitize";
+import {Block} from "components/blocks";
 
 export interface MarkDownBlock extends Block {
     type: 'markdown';
