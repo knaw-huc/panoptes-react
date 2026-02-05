@@ -1,5 +1,5 @@
 import {useMemo} from 'react';
-import {Block} from 'components/blocks/BlockLoader';
+import Block from 'components/blocks/Block';
 import {CmdiRecord, mapCmdiRecord} from 'components/blocks/cmdi/cmdi';
 import PropertyList from 'components/blocks/list/PropertyList';
 

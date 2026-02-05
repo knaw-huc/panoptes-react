@@ -1,9 +1,9 @@
-import {createContext, ReactNode} from 'react';
+import {createContext, ReactNode, FC} from 'react';
 import {RouteComponent} from '@tanstack/react-router';
 import Search from 'components/search/Search';
 import Detail from 'components/detail/Detail';
 import {TranslateFn} from "@knaw-huc/faceted-search-react";
-import {createTranslate} from "../../src/i18n";
+import Block from 'components/blocks/Block';
 
 export interface PanoptesConfiguration {
     url: string;
@@ -13,7 +13,8 @@ export interface PanoptesConfiguration {
     dataset?: string;
     searchComponent: RouteComponent;
     detailComponent: RouteComponent;
-    translateFn: TranslateFn;
+    translateFn?: TranslateFn;
+    blocks: Map<string, FC<{ block: Block }>>;
 }
 
 export const PanoptesContext = createContext<PanoptesConfiguration | null>(null);
@@ -47,7 +48,8 @@ export default function Panoptes({configuration = {}, children}: {
         dataset: configuration.dataset,
         searchComponent: configuration.searchComponent || Search,
         detailComponent: configuration.detailComponent || Detail,
-        translateFn: configuration.translateFn || createTranslate(),
+        blocks: configuration.blocks || new Map(),
+        translateFn: configuration.translateFn
     };
 
     return (

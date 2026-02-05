@@ -1,5 +1,5 @@
 import {queryOptions} from '@tanstack/react-query';
-import {Block} from 'components/blocks/BlockLoader';
+import {Block} from 'components/blocks';
 
 export interface DetailsResponse {
     item_id: string;

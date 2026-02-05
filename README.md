@@ -60,7 +60,7 @@ This context contains the configuration for the application:
 | `searchComponent` | `RouteComponent` |           |               | Replace the default `Search` component with a custom React component                                                                                      |
 | `detailComponent` | `RouteComponent` |           |               | Replace the default `Detail` component with a custom React component                                                                                      |
 | `translateFn`     | `TranslateFn`    |           |               | I18N translation function                                                                                                                                 |
-| `blocks`          | `Block[]`        |           |               | (TODO) Add additional `Block`s to Panoptes for customized rendering, see [Blocks](#blocks)                                                                |
+| `blocks`          | `Map<string, FC<{ block: Block }>>` |           |               | Add additional `Block`s to Panoptes for customized rendering using the Block `type` as key, see [Blocks](#blocks)                                             |
 
 You can use the `createPanoptesRoot` helper as an alternative for
 `createRoot` ([see React docs](https://react.dev/reference/react-dom/client/createRoot)) to create a root element for
@@ -75,14 +75,24 @@ context.
 Example setup:
 
 ```tsx
-import {createPanoptesRoot, PanoptesRouterProvider} from '@knaw-huc/panoptes-react';
+import {createPanoptesRoot, PanoptesRouterProvider, Block} from '@knaw-huc/panoptes-react';
+
+interface HelloBlock extends Block {
+    type: 'hello';
+    value: string;
+}
+
+function HelloBlockComponent({block}: { block: HelloBlock }) {
+    return <p>Hello {block.value}!</p>;
+}
 
 const root = createPanoptesRoot(document.getElementById('root')!, {
     url: 'https://your-panoptes.example.org',
     isEmbedded: false,
     searchPath: '/search',
     detailPath: '/detail/$id',
-    dataset: 'your-dataset-id'
+    dataset: 'your-dataset-id',
+    blocks: new Map([['hello', HelloBlockComponent]]),
 });
 
 root.render(<PanoptesRouterProvider/>);
@@ -155,21 +165,22 @@ type BlockValue = string | object | Block[];
 interface Block {
     type: string;
     value: BlockValue;
+    config?: object;
 }
 ```
 
-A block consists of a `type` and a `value`. The `type` determines the rendering of the block. The value is passed to the
-block component as a property. A simple block component could look like this:
+A block consists of a `type`, a `value` and sometimes `config`. The `type` determines the rendering of the block. The
+value and the config are passed to the block component as properties. A simple block component could look like this:
 
 ```tsx
 interface HelloWorldBlock extends Block {
     type: 'hello_world';
-    value: {hello?: string};
+    value: { hello?: string };
 }
 
 function RenderHelloWorld({block}: { block: HelloWorldBlock }) {
     return (
-        <h1>Hello ${block.value.hello || 'World'}</h1>
+        <h1>Hello {block.value.hello || 'World'}</h1>
     );
 }
 ```

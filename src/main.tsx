@@ -1,6 +1,4 @@
 import {createPanoptesRoot, PanoptesRouterProvider} from '../lib';
-import './css/pol-tijdschriften.css';
-import "./i18n/i18n.ts";
 
 const panoptesUrl = '$VITE_PANOPTES_URL';
 const panoptesIsEmbedded = '$VITE_PANOPTES_IS_EMBEDDED';

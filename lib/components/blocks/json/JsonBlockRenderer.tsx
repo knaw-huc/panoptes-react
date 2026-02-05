@@ -1,20 +1,23 @@
-import {FC} from "react";
+import {Suspense} from "react";
+import {ErrorBoundary} from "react-error-boundary";
 import {
+    deepGet,
     omitProperty,
-} from "../../../schema/schemaSelectors.ts";
+} from "./schemaSelectors.ts";
 import {
     JsonBlock,
     JsonSchema,
     JsonValue,
 } from "components/blocks/json/index.tsx";
 import classes from "./JsonBlockRenderer.module.css";
-import BlockLoader, { blocks } from "../BlockLoader.tsx";
-import {get} from "radash";
+import useBlock from "hooks/useBlock.ts";
+import {Block} from "components/blocks";
 import GhostLine from "components/utils/GhostLine.tsx";
+
 
 const isJsonBlock = (block: JsonBlock) => block.type === "json";
 
-/** humanize "some_keyName" -> "Some key name" (same behavior as your current component) */
+/** humanize "some_keyName" -> "Some key name" */
 const humanizeLabel = (label: string) =>
     label
         .replace(/_/g, " ")
@@ -59,6 +62,30 @@ const Primitive = ({ value }: { value: JsonValue }) => {
     }
 };
 
+/** Renders a configured block - may throw if block type not found */
+const ConfiguredBlockRenderer = ({
+    config,
+    value,
+    model,
+}: {
+    config: Block;
+    value: JsonValue;
+    model: JsonValue;
+}) => {
+    const BlockComponent = useBlock(config);
+
+    if (!BlockComponent) {
+        return null;
+    }
+
+    const block = { ...config, value, model };
+    return (
+        <Suspense fallback={<GhostLine/>}>
+            <BlockComponent block={block} />
+        </Suspense>
+    );
+};
+
 /**
  * Render a single property value.
  * - Applies schema behaviors (external link, internal link, markdown) only when we have a propKey.
@@ -77,14 +104,18 @@ const JsonPropertyValue = ({
     model: JsonValue;
     path: string;
 }) => {
-    const config = get(schema, propKey);
-    if (config && blocks[`./${config.type}/index.tsx`]) {
-        const blockLike = { type: config.type, value, ...config, model };
-        return <BlockLoader block={blockLike} fallback={<GhostLine />}/>;
+    const config = deepGet(schema, propKey) as Block;
+    const childSchema = schemaApi.childSchema(schema, propKey);
+
+    if (!config?.type) {
+        return <JsonValueRenderer value={value} schema={childSchema} path={path} />;
     }
 
-    // Generic rendering
-    return <JsonValueRenderer value={value} schema={schemaApi.childSchema(schema, propKey)} path={path} />;
+    return (
+        <ErrorBoundary fallback={<JsonValueRenderer value={value} schema={childSchema} path={path} />}>
+            <ConfiguredBlockRenderer config={config} value={value} model={model} />
+        </ErrorBoundary>
+    );
 };
 
 /**
@@ -152,7 +183,7 @@ const JsonValueRenderer = ({
     );
 };
 
-const JsonBlockRenderer: FC<{ block: JsonBlock }> = ({ block }) => {
+const JsonBlockRenderer = ({ block }: { block: JsonBlock }) => {
     if (!isJsonBlock(block)) {
         console.error("JsonBlockRenderer used with non-JSON block:", block);
         return null;
