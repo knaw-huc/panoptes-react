@@ -193,10 +193,6 @@ function renderInput(
     }
 }
 
-// ============================================
-// Array Input Component
-// ============================================
-
 interface ItemTemplate {
     [key: string]: {
         label: string;
@@ -215,8 +211,6 @@ interface ArrayInputProps {
 function ArrayInput({ value, onChange, onBlur, readOnly, element }: ArrayInputProps) {
     const items = Array.isArray(value) ? value : [];
     const itemTemplate = element.config?.itemTemplate as ItemTemplate | undefined;
-    const hideAddButton = element.config?.hideAddButton as boolean ?? false;
-    const hideRemoveButton = element.config?.hideRemoveButton as boolean ?? false;
 
     const handleItemChange = (index: number, newItemValue: unknown) => {
         const newItems = [...items];

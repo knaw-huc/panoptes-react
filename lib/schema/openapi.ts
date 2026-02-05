@@ -61,10 +61,6 @@ export interface Schema {
     $ref?: string;
 }
 
-// ============================================
-// Resolved Operation Configuration
-// ============================================
-
 export interface ResolvedOperation {
     operationId: string;
     method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
@@ -73,10 +69,6 @@ export interface ResolvedOperation {
     queryParameters: string[];
     hasRequestBody: boolean;
 }
-
-// ============================================
-// OpenAPI Parser
-// ============================================
 
 export class OpenAPIParser {
     private spec: OpenAPISpec;
@@ -143,10 +135,6 @@ export class OpenAPIParser {
     }
 }
 
-// ============================================
-// URL Builder
-// ============================================
-
 export function buildOperationUrl(
     baseUrl: string,
     operation: ResolvedOperation,
@@ -161,7 +149,6 @@ export function buildOperationUrl(
         }
     }
 
-    // Add query parameters
     const queryParams = new URLSearchParams();
     for (const param of operation.queryParameters) {
         const value = parameters[param];
@@ -175,10 +162,6 @@ export function buildOperationUrl(
 
     return queryString ? `${fullUrl}?${queryString}` : fullUrl;
 }
-
-// ============================================
-// Spec Loader
-// ============================================
 
 export async function loadOpenAPISpec(source: string | OpenAPISpec): Promise<OpenAPISpec> {
     if (typeof source === 'string') {

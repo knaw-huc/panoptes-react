@@ -1,9 +1,5 @@
 import Block from '../components/blocks/Block';
 
-// ============================================
-// Screen Definition Types
-// ============================================
-
 export interface ScreenDefinition {
     id: string;
     label: string;
@@ -16,11 +12,7 @@ export interface ScreenDefinition {
     form: FormDefinition;
 }
 
-export type ScreenType = 'normal' | 'modal' | 'wizard';
-
-// ============================================
-// Tab Types
-// ============================================
+export type ScreenType = 'normal';
 
 export interface TabDefinition {
     id: string;
@@ -35,18 +27,10 @@ export interface OperationListItem {
     operation: OperationDefinition;
 }
 
-// ============================================
-// Operation Types
-// ============================================
-
 export interface OperationDefinition {
     operationId: string;
     parameters: Record<string, string | number | boolean>;
 }
-
-// ============================================
-// Link Types
-// ============================================
 
 export interface LinkDefinition {
     id: string;
@@ -54,10 +38,6 @@ export interface LinkDefinition {
     operation?: OperationDefinition;
     href?: string;
 }
-
-// ============================================
-// Action Types
-// ============================================
 
 export interface ActionDefinition {
     id: string;
@@ -80,10 +60,6 @@ export interface ConfirmationLabels {
     ok?: string;
     cancel?: string;
 }
-
-// ============================================
-// Form Definition Types
-// ============================================
 
 export interface FormDefinition {
     rows: RowDefinition[];
@@ -116,10 +92,6 @@ export interface ElementDefinition {
     config?: Record<string, unknown>;
 }
 
-// ============================================
-// Binding Context Types
-// ============================================
-
 export interface BindingContext {
     data: Record<string, unknown>;
     globals: Record<string, unknown>;
@@ -133,10 +105,6 @@ export interface FormState {
     touched: Set<string>;
 }
 
-// ============================================
-// Screen Block Type
-// ============================================
-
 export type ScreenBlockValue = Record<string, unknown>;
 
 export interface ScreenBlock extends Block {
@@ -144,11 +112,6 @@ export interface ScreenBlock extends Block {
     value: ScreenBlockValue;
     config: ScreenDefinition;
 }
-
-
-// ============================================
-// Form Action Types (for reducer)
-// ============================================
 
 export type FormAction =
     | { type: 'SET_FIELD_VALUE'; path: string; value: unknown }

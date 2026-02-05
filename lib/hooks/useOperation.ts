@@ -32,7 +32,6 @@ export function useOperationExecutor(): OperationExecutor | null {
     };
 }
 
-// Hook for read operations (GET) - used by tabs
 export function useOperationQuery(
     operationDef: OperationDefinition | undefined,
     executor: OperationExecutor | null,
@@ -76,7 +75,6 @@ export function useOperationQuery(
     });
 }
 
-// Hook for write operations (POST/PUT/DELETE) - used by actions
 export function useOperationMutation(
     operationDef: OperationDefinition | undefined,
     executor: OperationExecutor | null
@@ -99,7 +97,6 @@ export function useOperationMutation(
 
             const url = buildOperationUrl(executor.baseUrl, operation, resolvedParams);
 
-            // Build request body from payload or dirty form values
             const body = payload || buildSubmitPayload(bindingContext);
 
             const response = await fetch(url, {
@@ -130,7 +127,6 @@ export function useOperationMutation(
     });
 }
 
-// Combined hook for convenient operation usage
 export default function useOperation(operationDef: OperationDefinition | undefined): UseOperationResult {
     const executor = useOperationExecutor();
     const mutation = useOperationMutation(operationDef, executor);

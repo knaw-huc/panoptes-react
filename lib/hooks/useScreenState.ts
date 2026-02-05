@@ -71,7 +71,6 @@ export default function useScreenState(): UseScreenStateResult {
     };
 }
 
-// Convenience hook for a single element
 export function useElementState(element: ElementDefinition) {
     const { setValue, setTouched, getFieldState } = useScreenState();
     const expression = element.value;

@@ -1,9 +1,5 @@
 import { BindingContext } from './types';
 
-// ============================================
-// Binding Expression Types
-// ============================================
-
 export type BindingSource = 'data' | 'global';
 
 export interface ParsedBinding {
@@ -11,10 +7,6 @@ export interface ParsedBinding {
     path: string[];
     rawPath: string;
 }
-
-// ============================================
-// Binding Expression Parser
-// ============================================
 
 const BINDING_REGEX = /^\$(data|global)#\/(.+)$/;
 
@@ -34,10 +26,6 @@ export function parseBinding(expression: string): ParsedBinding {
 
     return { source, path, rawPath };
 }
-
-// ============================================
-// Value Resolution
-// ============================================
 
 export function resolveBinding(context: BindingContext, expression: string): unknown {
     const { source, path } = parseBinding(expression);
@@ -97,10 +85,6 @@ export function setNestedValue(
     };
 }
 
-// ============================================
-// Form Value Updates
-// ============================================
-
 export function updateFormValue(
     formValues: Record<string, unknown>,
     expression: string,
@@ -126,10 +110,6 @@ export function getFormValue(
     return resolveBinding(context, expression);
 }
 
-// ============================================
-// Globals Resolution
-// ============================================
-
 export function resolveGlobals(
     globalsDefinition: Record<string, string>,
     data: Record<string, unknown>
@@ -152,10 +132,6 @@ export function resolveGlobals(
     return globals;
 }
 
-// ============================================
-// Operation Parameter Resolution
-// ============================================
-
 export function resolveOperationParameters(
     parameters: Record<string, string | number | boolean>,
     context: BindingContext
@@ -172,10 +148,6 @@ export function resolveOperationParameters(
 
     return resolved;
 }
-
-// ============================================
-// Dirty Field Collection
-// ============================================
 
 export function collectDirtyValues(
     context: BindingContext

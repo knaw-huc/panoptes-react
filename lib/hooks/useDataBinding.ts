@@ -34,7 +34,6 @@ export default function useDataBinding(): UseDataBindingResult {
     }), [bindingContext]);
 }
 
-// Hook to resolve operation parameters
 export function useOperationParameters(operation: OperationDefinition | undefined): Record<string, unknown> {
     const { bindingContext } = useScreenContext();
 

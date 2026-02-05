@@ -16,7 +16,6 @@ export default function FormRow({ row }: FormRowProps) {
     const hasColumns = row.columns && row.columns.length > 0;
     const hasElements = row.elements && row.elements.length > 0;
 
-    // Determine the wrapper element and class based on displayType
     const getRowClassName = () => {
         const classes = [styles.row];
         switch (displayType) {

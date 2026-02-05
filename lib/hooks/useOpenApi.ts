@@ -19,7 +19,6 @@ export interface UseOpenApiResult {
 export default function useOpenApi(
     spec: string | OpenAPISpec | undefined
 ): UseOpenApiResult {
-    // Use TanStack Query for fetching remote specs
     const {
         data: loadedSpec,
         isLoading,
