@@ -9,6 +9,7 @@ export * from 'components/utils';
 export * from 'components/blocks';
 export * from 'context/index';
 export * from 'hooks/index';
+export * from './schema/index';
 
 export function createPanoptesRoot(container: Container, configuration: Partial<PanoptesConfiguration> = {},
                                    queryClient?: QueryClient): Root {

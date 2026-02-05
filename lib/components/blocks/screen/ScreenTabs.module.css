@@ -1,0 +1,80 @@
+.tabs {
+    display: flex;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.tab {
+    position: relative;
+}
+
+.tabButton {
+    padding: 0.75rem 1.25rem;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-text-secondary, #737373);
+    cursor: pointer;
+    transition: color 150ms ease, border-color 150ms ease;
+
+    &:hover {
+        color: var(--color-text-primary, #171717);
+    }
+
+    &:focus-visible {
+        outline: 2px solid var(--color-focus, #3b82f6);
+        outline-offset: -2px;
+    }
+}
+
+.tabActive {
+    .tabButton {
+        color: var(--color-brand-500, #2563eb);
+        border-bottom-color: var(--color-brand-500, #2563eb);
+    }
+}
+
+.subnav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 10;
+    min-width: 200px;
+    margin: 0;
+    padding: 0.5rem 0;
+    list-style: none;
+    background-color: var(--color-bg-elevated, #ffffff);
+    border: 1px solid var(--color-border, #e5e5e5);
+    border-radius: 0.375rem;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.subitem {
+    margin: 0;
+}
+
+.subitemButton {
+    display: block;
+    width: 100%;
+    padding: 0.5rem 1rem;
+    background: none;
+    border: none;
+    font-size: 0.875rem;
+    color: var(--color-text-primary, #171717);
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 150ms ease;
+
+    &:hover {
+        background-color: var(--color-bg-hover, #f5f5f5);
+    }
+
+    &:focus-visible {
+        outline: 2px solid var(--color-focus, #3b82f6);
+        outline-offset: -2px;
+    }
+}
