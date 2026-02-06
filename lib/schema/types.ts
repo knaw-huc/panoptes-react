@@ -5,7 +5,6 @@ export interface ScreenDefinition {
     label: string;
     activeTabId?: string;
     screenType: ScreenType;
-    globals?: Record<string, string>;
     tabs: TabDefinition[];
     links?: LinkDefinition[];
     actions: ActionDefinition[];
@@ -81,28 +80,12 @@ export interface ColumnDefinition {
 
 export interface ElementDefinition {
     value: string;
-    bind?: boolean;
-    readOnly?: boolean;
     hidden?: boolean;
     addIndeterminate?: boolean;
-    required?: boolean;
     label?: string;
     infoLabel?: string;
     type?: string;
     config?: Record<string, unknown>;
-}
-
-export interface BindingContext {
-    data: Record<string, unknown>;
-    globals: Record<string, unknown>;
-    formState: FormState;
-}
-
-export interface FormState {
-    values: Record<string, unknown>;
-    dirty: Set<string>;
-    errors: Record<string, string>;
-    touched: Set<string>;
 }
 
 export type ScreenBlockValue = Record<string, unknown>;
@@ -112,13 +95,3 @@ export interface ScreenBlock extends Block {
     value: ScreenBlockValue;
     config: ScreenDefinition;
 }
-
-export type FormAction =
-    | { type: 'SET_FIELD_VALUE'; path: string; value: unknown }
-    | { type: 'SET_FIELD_TOUCHED'; path: string }
-    | { type: 'SET_FIELD_ERROR'; path: string; error: string }
-    | { type: 'CLEAR_FIELD_ERROR'; path: string }
-    | { type: 'RESET_FORM'; initialValues: Record<string, unknown> }
-    | { type: 'SUBMIT_START' }
-    | { type: 'SUBMIT_SUCCESS' }
-    | { type: 'SUBMIT_ERROR'; error: string };

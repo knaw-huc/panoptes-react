@@ -4,7 +4,6 @@ import Search from 'components/search/Search';
 import Detail from 'components/detail/Detail';
 import {TranslateFn} from "@knaw-huc/faceted-search-react";
 import Block from 'components/blocks/Block';
-import {OpenAPISpec, OpenAPIParser} from '../schema/openapi';
 
 export interface PanoptesConfiguration {
     url: string;
@@ -16,8 +15,6 @@ export interface PanoptesConfiguration {
     detailComponent: RouteComponent;
     translateFn?: TranslateFn;
     blocks: Map<string, FC<{ block: Block }>>;
-    openApiSpec?: string | OpenAPISpec;
-    openApiParser?: OpenAPIParser;
 }
 
 export const PanoptesContext = createContext<PanoptesConfiguration | null>(null);
@@ -52,11 +49,7 @@ export default function Panoptes({configuration = {}, children}: {
         searchComponent: configuration.searchComponent || Search,
         detailComponent: configuration.detailComponent || Detail,
         blocks: configuration.blocks || new Map(),
-        translateFn: configuration.translateFn,
-        openApiSpec: configuration.openApiSpec,
-        openApiParser: configuration.openApiSpec && typeof configuration.openApiSpec !== 'string'
-            ? new OpenAPIParser(configuration.openApiSpec)
-            : undefined,
+        translateFn: configuration.translateFn
     };
 
     return (

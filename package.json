@@ -30,7 +30,8 @@
     "react-error-boundary": "^6.1.0",
     "react-markdown": "^10.1.0",
     "rehype-sanitize": "^6.0.0",
-    "rehype-raw": "^7.0.0"
+    "rehype-raw": "^7.0.0",
+    "edtf": "^4.9.1"
   },
   "peerDependencies": {
     "@tanstack/react-query": "5",
