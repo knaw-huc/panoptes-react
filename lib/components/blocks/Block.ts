@@ -1,4 +1,4 @@
-export type BlockValue = string | object | Block[];
+export type BlockValue = string | number | boolean | null | object | Block[];
 
 export default interface Block {
     type: string;

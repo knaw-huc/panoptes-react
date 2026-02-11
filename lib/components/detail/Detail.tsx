@@ -1,7 +1,7 @@
 import BlockLoader from 'components/blocks/BlockLoader';
 import * as DetailLayout from 'components/utils/DetailLayout';
-import BackToSearch from 'components/utils/BackToSearch';
 import useDetails from 'hooks/useDetails';
+import {BackToSearch} from "components/utils";
 
 export default function Detail() {
     return (

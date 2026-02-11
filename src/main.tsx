@@ -21,4 +21,4 @@ createPanoptesRoot(document.getElementById('root')!, {
     searchPath: getVar(panoptesSearchPath),
     detailPath: getVar(panoptesDetailPath),
     dataset: getVar(panoptesDataset),
-}).render(<PanoptesRouterProvider/>);
+}).render(<PanoptesRouterProvider />);

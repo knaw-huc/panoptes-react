@@ -4,13 +4,15 @@ import useDataset from 'hooks/useDataset';
 import Facets from './Facets';
 import Results from './Results';
 import classes from './Search.module.css';
+import usePanoptes from "hooks/usePanoptes.ts";
 
 export default function Search() {
     const [dataset] = useDataset('search');
     const {searchFn, facets, pageSize} = useSearch(dataset);
+    const {translateFn} = usePanoptes();
 
     return (
-        <FacetedSearch facets={facets} searchFn={searchFn} pageSize={pageSize}>
+        <FacetedSearch facets={facets} searchFn={searchFn} pageSize={pageSize} translate={translateFn}>
             <div className={classes.search}>
                 <SearchFacets/>
                 <SearchResults/>
@@ -30,8 +32,6 @@ function SearchFacets() {
 function SearchResults() {
     return (
         <div className={classes.results}>
-            <h2 className={classes.title}>Results</h2>
-
             <HookedSelectedFacets/>
             <Results/>
             <HookedPagination/>

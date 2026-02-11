@@ -9,7 +9,7 @@ const blocks = import.meta.glob('../components/blocks/*/index.tsx') as Record<st
 export default function useBlock(block: Block): FC<{ block: Block }> {
     const {blocks: customBlocks} = usePanoptes();
 
-    const importer = blocks[`./${block.type}/index.tsx`];
+    const importer = blocks[`../components/blocks/${block.type}/index.tsx`];
     if (importer) {
         return lazy(importer);
     }
