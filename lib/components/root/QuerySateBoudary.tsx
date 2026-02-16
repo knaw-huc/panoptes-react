@@ -11,7 +11,7 @@ export default function QueryStateBoundary({children}: { children: ReactNode }) 
                         <h2>Something went wrong!</h2>
 
                         <pre>
-                            {error.message}
+                            {error instanceof Error ? error.message : String(error)}
                         </pre>
 
                         <div>

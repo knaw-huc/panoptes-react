@@ -27,10 +27,7 @@
   "dependencies": {
     "@knaw-huc/faceted-search-react": "^0.0.10",
     "msw": "^2.12.8",
-    "react-error-boundary": "^6.1.0",
-    "react-markdown": "^10.1.0",
-    "rehype-sanitize": "^6.0.0",
-    "rehype-raw": "^7.0.0"
+    "react-error-boundary": "^6.1.0"
   },
   "peerDependencies": {
     "@tanstack/react-query": "5",
