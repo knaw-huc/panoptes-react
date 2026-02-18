@@ -12,16 +12,10 @@ export interface TextFacet extends Facet {
 
 export interface RangeFacet extends Facet {
     type: 'range';
-    min: number;
-    max: number;
-    step: number;
 }
 
 export interface HistogramFacet extends Facet {
-    type: 'histogram',
-    min: number;
-    max: number;
-    step: number;
+    type: 'histogram';
 }
 
 export function getFacetsQueryOptions(api: string, dataset: string) {

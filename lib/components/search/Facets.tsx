@@ -1,14 +1,13 @@
 import {
     FacetsSection,
     HookedSearchFacet,
-    HookedRangeFacet,
+    HookedNumericRangeFacet,
     HookedFilterFacet,
     HookedFilterFacetItems,
     Histogram
 } from '@knaw-huc/faceted-search-react';
 import {Facet, TextFacet, RangeFacet, HistogramFacet} from 'queries/facets';
-import useFacet from 'hooks/useFacet';
-import useFacets from 'hooks/useFacets';
+import {useFacets, useTextFacet, useRangeFacet} from 'hooks/index';
 
 export default function Facets() {
     const {data: facets} = useFacets();
@@ -42,8 +41,14 @@ function FacetRendering({facet}: { facet: Facet }) {
 }
 
 function RangeFacetRendering({facet}: { facet: RangeFacet }) {
+    const {ranges} = useRangeFacet(facet.property, true);
+    const sortedKeys = Object.keys(ranges).sort();
+
     return (
-        <HookedRangeFacet facetKey={facet.property} min={facet.min} max={facet.max} step={facet.step}/>
+        <HookedNumericRangeFacet facetKey={facet.property}
+                                 min={parseInt(sortedKeys[0])}
+                                 max={parseInt(sortedKeys[sortedKeys.length - 1])}
+                                 step={1}/>
     );
 }
 
@@ -56,7 +61,7 @@ function TextFacetRendering({facet}: { facet: TextFacet }) {
 }
 
 function TextFacetItemsRendering({name}: { name: string }) {
-    const {items} = useFacet(name);
+    const {items} = useTextFacet(name);
 
     return (
         <HookedFilterFacetItems items={items}/>
@@ -64,18 +69,27 @@ function TextFacetItemsRendering({name}: { name: string }) {
 }
 
 function HistogramFacetRendering({facet}: { facet: HistogramFacet }) {
+    const {ranges} = useRangeFacet(facet.property, true);
+    const sortedKeys = Object.keys(ranges).sort();
+
     return (
-        <HookedRangeFacet facetKey={facet.property} min={facet.min} max={facet.max} step={facet.step}>
+        <HookedNumericRangeFacet facetKey={facet.property}
+                                 min={parseInt(sortedKeys[0])}
+                                 max={parseInt(sortedKeys[sortedKeys.length - 1])}
+                                 step={1}>
             <HistogramRendering facet={facet}/>
-        </HookedRangeFacet>
+        </HookedNumericRangeFacet>
     );
 }
 
 function HistogramRendering({facet}: { facet: HistogramFacet }) {
-    const {items} = useFacet(facet.property);
-    const histogramItems = items.map(item => ({year: Number(item.itemKey), amount: item.amount}));
+    const {ranges} = useRangeFacet(facet.property);
+    const items = Object.entries(ranges).map(([year, amount]) => ({
+        year: parseInt(year),
+        amount
+    }));
 
     return (
-        <Histogram items={histogramItems}/>
+        <Histogram items={items}/>
     );
 }

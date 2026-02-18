@@ -27,7 +27,7 @@ const mapFacetResultsToItems = (results: FacetResult[]): FilterFacetItem[] => re
     children: result.children ? mapFacetResultsToItems(result.children) : [],
 }));
 
-export default function useFacet(name: string) {
+export default function useTextFacet(name: string) {
     const {url} = usePanoptes();
     const state = useSearchState();
     const updateFacetValueLabels = useUpdateFacetValueLabels(name);
