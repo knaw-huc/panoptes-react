@@ -41,7 +41,7 @@ function FacetRendering({facet}: { facet: Facet }) {
 }
 
 function RangeFacetRendering({facet}: { facet: RangeFacet }) {
-    const {ranges} = useRangeFacet(facet.property, true);
+    const {ranges} = useRangeFacet(facet.property);
     const sortedKeys = Object.keys(ranges).sort();
 
     return (
@@ -69,7 +69,7 @@ function TextFacetItemsRendering({name}: { name: string }) {
 }
 
 function HistogramFacetRendering({facet}: { facet: HistogramFacet }) {
-    const {ranges} = useRangeFacet(facet.property, true);
+    const {ranges} = useRangeFacet(facet.property);
     const sortedKeys = Object.keys(ranges).sort();
 
     return (

@@ -5,7 +5,7 @@ import {getFacetQueryOptions} from 'queries/facet';
 import useDataset from 'hooks/useDataset';
 import usePanoptes from 'hooks/usePanoptes';
 
-export default function useRangeFacet(name: string, initialState: boolean = false) {
+export default function useRangeFacet(name: string) {
     const {url} = usePanoptes();
     const state = useSearchState();
     const [dataset] = useDataset('search');
@@ -14,7 +14,7 @@ export default function useRangeFacet(name: string, initialState: boolean = fals
         amount: 100,
         filter: '',
         sort: 'hits',
-        facets: initialState ? {} : state.facetValues,
+        facets: state.facetValues,
     }));
     const ranges = useMemo(() => facetResults.reduce<Record<string, number>>((acc, cur) => ({
         ...acc,
