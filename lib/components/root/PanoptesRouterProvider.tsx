@@ -23,7 +23,7 @@ export default function PanoptesRouterProvider() {
     });
 
     const routeTree = rootRoute.addChildren([
-        searchRoute, detailRoute
+        searchRoute.addChildren([detailRoute])
     ]);
 
     const router = createRouter({
