@@ -19,6 +19,7 @@ Run for development:
     - [Mock behavior](#mock-behavior)
 - [How to use this library](#how-to-use-this-library)
     - [Setup](#setup)
+    - [i18n](#i18n)
     - [Customization](#customization)
         - [Hooks](#hooks)
         - [Blocks](#blocks)
@@ -100,15 +101,25 @@ root.render(<PanoptesRouterProvider/>);
 
 ### i18n
 
-An optional internationalization (i18n) function used to translate UI labels in the search interface. It follows the signature:
+Panoptes React accepts an optional `translateFn` in its configuration to translate UI labels. It is library-agnostic — you can plug in i18next, react-intl, or any other solution as long as it matches the signature:
 
 ```typescript
 type TranslateFn = (key: string, options?: Record<string, unknown>) => string;
 ```
-Default behavior: If not provided, Panoptes-React uses a built-in i18n setup powered by i18next that:
-- Auto-detects the browser language
-- Supports English (en) and Dutch (nl) locales
-- Falls back to English for unsupported languages
+
+If `translateFn` is not provided, all components fall back to hardcoded English strings, so the library works out of the box without any i18n configuration.
+
+#### Translation keys owned by panoptes-react
+
+| Key | Fallback |
+|-----|---------|
+| `panoptes.noValue` | `No value` |
+| `panoptes.yes` | `Yes` |
+| `panoptes.no` | `No` |
+| `panoptes.mainSiteNavigation` | `Main site navigation` |
+
+The search interface (facets, pagination, filters, etc.) is powered by `@knaw-huc/faceted-search-react`, which manages its own translation keys (e.g. `search.*`, `filter.*`, `facet.*`, `pagination.*`). The same `translateFn` is forwarded to it automatically. When no function is provided, `faceted-search-react` auto-detects the browser language and supports English (en) and Dutch (nl), falling back to English for other locales.
+
 ### Customization
 
 The library exposes a set of hooks to use Panoptes in your own React components. Both the default `Search` and `Detail`
