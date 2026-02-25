@@ -3,8 +3,7 @@ import {
     HookedSearchFacet,
     HookedNumericRangeFacet,
     HookedFilterFacet,
-    HookedFilterFacetItems,
-    Histogram
+    HookedFilterFacetItems
 } from '@knaw-huc/faceted-search-react';
 import {Facet, TextFacet, RangeFacet, HistogramFacet} from 'queries/facets';
 import {useFacets, useTextFacet, useRangeFacet} from 'hooks/index';
@@ -71,25 +70,16 @@ function TextFacetItemsRendering({name}: { name: string }) {
 function HistogramFacetRendering({facet}: { facet: HistogramFacet }) {
     const {ranges} = useRangeFacet(facet.property);
     const sortedKeys = Object.keys(ranges).sort();
-
-    return (
-        <HookedNumericRangeFacet facetKey={facet.property}
-                                 min={parseInt(sortedKeys[0])}
-                                 max={parseInt(sortedKeys[sortedKeys.length - 1])}
-                                 step={1}>
-            <HistogramRendering facet={facet}/>
-        </HookedNumericRangeFacet>
-    );
-}
-
-function HistogramRendering({facet}: { facet: HistogramFacet }) {
-    const {ranges} = useRangeFacet(facet.property);
     const items = Object.entries(ranges).map(([year, amount]) => ({
         year: parseInt(year),
         amount
     }));
 
     return (
-        <Histogram items={items}/>
+        <HookedNumericRangeFacet facetKey={facet.property}
+                                 min={parseInt(sortedKeys[0])}
+                                 max={parseInt(sortedKeys[sortedKeys.length - 1])}
+                                 items={items}
+                                 step={1}/>
     );
 }
