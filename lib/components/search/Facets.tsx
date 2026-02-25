@@ -2,6 +2,7 @@ import {
     FacetsSection,
     HookedSearchFacet,
     HookedNumericRangeFacet,
+    HookedDateRangeFacet,
     HookedFilterFacet,
     HookedFilterFacetItems
 } from '@knaw-huc/faceted-search-react';
@@ -34,8 +35,10 @@ function FacetRendering({facet}: { facet: Facet }) {
             );
         case 'histogram':
             return (
-                <HistogramFacetRendering facet={facet as HistogramFacet}/>
+                <HistogramFacetRendering facet={facet as HistogramFacet} type={'numeric'}/>
             );
+        case 'date':
+            return <HistogramFacetRendering facet={facet as HistogramFacet} type={'date'}/>
     }
 }
 
@@ -67,7 +70,7 @@ function TextFacetItemsRendering({name}: { name: string }) {
     );
 }
 
-function HistogramFacetRendering({facet}: { facet: HistogramFacet }) {
+function HistogramFacetRendering({facet, type = 'numeric'}: { facet: HistogramFacet, type: string }) {
     const {ranges} = useRangeFacet(facet.property);
     const sortedKeys = Object.keys(ranges).sort();
     const items = Object.entries(ranges).map(([year, amount]) => ({
@@ -75,11 +78,22 @@ function HistogramFacetRendering({facet}: { facet: HistogramFacet }) {
         amount
     }));
 
-    return (
-        <HookedNumericRangeFacet facetKey={facet.property}
-                                 min={parseInt(sortedKeys[0])}
-                                 max={parseInt(sortedKeys[sortedKeys.length - 1])}
-                                 items={items}
-                                 step={1}/>
-    );
+    if (type == 'numeric') {
+        return (
+            <HookedNumericRangeFacet facetKey={facet.property}
+                                     min={parseInt(sortedKeys[0])}
+                                     max={parseInt(sortedKeys[sortedKeys.length - 1])}
+                                     items={items}
+                                     step={1}/>
+        );
+    }
+    if (type == 'date') {
+        return (
+            <HookedDateRangeFacet facetKey={facet.property}
+                                     min={sortedKeys[0]}
+                                     max={sortedKeys[sortedKeys.length - 1]}
+                                     items={items}
+                                     />
+        );
+    }
 }
