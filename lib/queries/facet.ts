@@ -9,10 +9,18 @@ export interface FacetRequest {
 }
 
 export interface FacetResult {
+    count: number;
+}
+
+export interface TextFacetResult extends FacetResult {
     name?: string;
     value: string;
-    count: number;
-    children?: FacetResult[];
+    children?: TextFacetResult[];
+}
+
+export interface RangeFacetResult extends FacetResult {
+    start: string | number;
+    end: string | number;
 }
 
 export function getFacetQueryOptions(api: string, dataset: string, request: FacetRequest) {

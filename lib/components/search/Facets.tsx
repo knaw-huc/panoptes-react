@@ -43,13 +43,12 @@ function FacetRendering({facet}: { facet: Facet }) {
 }
 
 function RangeFacetRendering({facet}: { facet: RangeFacet }) {
-    const {ranges} = useRangeFacet(facet.property);
-    const sortedKeys = Object.keys(ranges).sort();
+    const {terms} = useRangeFacet(facet.property);
 
     return (
         <HookedNumericRangeFacet facetKey={facet.property}
-                                 min={parseInt(sortedKeys[0])}
-                                 max={parseInt(sortedKeys[sortedKeys.length - 1])}
+                                 min={terms[0].start as number}
+                                 max={terms[terms.length - 1].end as number}
                                  step={1}/>
     );
 }
@@ -71,29 +70,24 @@ function TextFacetItemsRendering({name}: { name: string }) {
 }
 
 function HistogramFacetRendering({facet, type = 'numeric'}: { facet: HistogramFacet, type: string }) {
-    const {ranges} = useRangeFacet(facet.property);
-    const sortedKeys = Object.keys(ranges).sort();
-    const items = Object.entries(ranges).map(([year, amount]) => ({
-        year: parseInt(year),
-        amount
-    }));
+    const {terms} = useRangeFacet(facet.property);
 
     if (type == 'numeric') {
         return (
             <HookedNumericRangeFacet facetKey={facet.property}
-                                     min={parseInt(sortedKeys[0])}
-                                     max={parseInt(sortedKeys[sortedKeys.length - 1])}
-                                     items={items}
+                                     min={terms[0].start as number}
+                                     max={terms[terms.length - 1].end as number}
+                                     terms={terms}
                                      step={1}/>
         );
     }
     if (type == 'date') {
         return (
             <HookedDateRangeFacet facetKey={facet.property}
-                                     min={sortedKeys[0]}
-                                     max={sortedKeys[sortedKeys.length - 1]}
-                                     items={items}
-                                     />
+                                  min={terms[0].start as string}
+                                  max={terms[terms.length - 1].end as string}
+                                  terms={terms}
+            />
         );
     }
 }
