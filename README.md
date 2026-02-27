@@ -3,8 +3,10 @@
 Panoptes React is a React-based dataset search/browse tool backed by Panoptes. It is both a reusable React library (ES
 module) that you can embed in your own React app and a standalone application if no further customization is needed.
 
-The library exposes helpers to bootstrap a Panoptes-enabled React application and requires TanStack Query for data
-fetching and caching and TanStack Router for client-side routing.
+The library is built upon `@knaw-huc/faceted-search-react` and exposes helpers to bootstrap a Panoptes-enabled React
+application and requires TanStack Query for data fetching and caching and TanStack Router for client-side routing.
+
+![Panoptes schema](schema.png)
 
 Install the library using:
 `npm install @knaw-huc/panoptes-react`\
