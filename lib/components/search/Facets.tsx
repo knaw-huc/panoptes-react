@@ -44,7 +44,6 @@ function FacetRendering({facet}: { facet: Facet }) {
 
 function RangeFacetRendering({facet}: { facet: RangeFacet }) {
     const {terms} = useRangeFacet(facet.property);
-
     return (
         <HookedNumericRangeFacet facetKey={facet.property}
                                  min={terms[0].start as number}
@@ -84,10 +83,10 @@ function HistogramFacetRendering({facet, type = 'numeric'}: { facet: HistogramFa
     if (type == 'date') {
         return (
             <HookedDateRangeFacet facetKey={facet.property}
-                                  min={terms[0].start as string}
-                                  max={terms[terms.length - 1].end as string}
-                                  terms={terms}
-            />
+                                     min={terms[0].start as string}
+                                     max={terms[terms.length - 1].end as string}
+                                     terms={terms}
+                                     />
         );
     }
 }
