@@ -1,4 +1,5 @@
 import classes from './PropertyList.module.css';
+import {usePanoptes} from "hooks/index";
 
 type PropertyListValue = PropertyListData | string | number | boolean | null;
 
@@ -51,15 +52,19 @@ function PropertyListValues({value}: { value: PropertyListValue | PropertyListVa
 }
 
 function PropertyListValue({value}: { value: PropertyListValue }) {
+    const { translateFn } = usePanoptes();
+
     if (value === null) {
-        return <span className={classes.empty} title="No value">—</span>;
+        return <span className={classes.empty}
+                     title={translateFn ? translateFn('panoptes.noValue') : 'No value'}>—</span>;
     }
 
     switch (typeof value) {
         case 'object':
             return <PropertyList data={value}/>;
         case 'boolean':
-            return value ? 'Yes' : 'No';
+            return value ? (translateFn ? translateFn('panoptes.yes') : 'Yes')
+                            : (translateFn ? translateFn('panoptes.no') : 'No');
         case 'number':
             return value.toLocaleString();
         default:

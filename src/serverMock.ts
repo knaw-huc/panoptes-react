@@ -467,7 +467,7 @@ const CATEGORY_FACET_VALUES = [
 
 export default setupWorker(
     http.post<{}, SearchRequest>('https://example.org/api/datasets/example/search', async ({request}) => searchResolver(await request.json())),
-    http.post<{}, FacetRequest>('https://example.org/api/datasets/example/facet', async ({request}) => facetResolver(await request.json())),
+    http.post<{name: string}, FacetRequest>('https://example.org/api/datasets/example/facet/:name', ({params}) => facetResolver({name: params.name} as FacetRequest)),
     http.get('https://example.org/api/datasets/example/facets', facetsResolver),
     http.get<{id: string}>('https://example.org/api/datasets/example/details/:id', ({params}) => detailsResolver(params.id)),
 );
