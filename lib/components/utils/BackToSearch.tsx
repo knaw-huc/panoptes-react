@@ -5,9 +5,8 @@ import iconArrowLeft from 'assets/icon-arrow-left.svg';
 import classes from './BackToSearch.module.css';
 
 export default function BackToSearch() {
-
     const router = useRouter();
-    const { searchPath } = usePanoptes();
+    const {searchPath} = usePanoptes();
     const [dataset] = useDataset('detail');
 
     const handleBack = () => {
@@ -16,7 +15,7 @@ export default function BackToSearch() {
         } else {
             router.navigate({
                 to: searchPath,
-                params: { dataset },
+                params: {dataset},
             });
         }
     };
@@ -24,9 +23,8 @@ export default function BackToSearch() {
     return (
         <div className={classes.backToSearch}>
             <a onClick={handleBack} className={classes.button}>
-                <img src={iconArrowLeft} alt='' />
+                <img src={iconArrowLeft} alt=''/>
             </a>
         </div>
     );
-
 }
