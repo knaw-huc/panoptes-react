@@ -25,9 +25,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@knaw-huc/faceted-search-react": "^0.0.10",
-    "msw": "^2.12.10",
-    "react-error-boundary": "^6.1.1"
+    "@knaw-huc/faceted-search-react": "^0.0.12",
+    "msw": "^2.12.8",
+    "react-error-boundary": "^6.1.0"
   },
   "peerDependencies": {
     "@tanstack/react-query": "5",

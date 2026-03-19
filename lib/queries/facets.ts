@@ -3,7 +3,7 @@ import {queryOptions} from '@tanstack/react-query';
 export interface Facet {
     property: string;
     name: string;
-    type: 'text' | 'range' | 'tree';
+    type: 'text' | 'range' | 'tree' | 'histogram' | 'date';
 }
 
 export interface TextFacet extends Facet {
@@ -12,9 +12,10 @@ export interface TextFacet extends Facet {
 
 export interface RangeFacet extends Facet {
     type: 'range';
-    min: number;
-    max: number;
-    step: number;
+}
+
+export interface HistogramFacet extends Facet {
+    type: 'histogram';
 }
 
 export function getFacetsQueryOptions(api: string, dataset: string) {

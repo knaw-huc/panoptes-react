@@ -6,6 +6,8 @@ const panoptesSearchPath = '$VITE_PANOPTES_SEARCH_PATH';
 const panoptesDetailPath = '$VITE_PANOPTES_DETAIL_PATH';
 const panoptesDataset = '$VITE_PANOPTES_DATASET';
 
+import '@knaw-huc/faceted-search-react/iisg.css'
+
 const getVar = (envVariable: string): string | undefined =>
     envVariable.startsWith('$VITE_')
         ? (envVariable.slice(1) in import.meta.env ? import.meta.env[envVariable.slice(1)] : undefined)

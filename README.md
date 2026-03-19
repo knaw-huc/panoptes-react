@@ -149,7 +149,7 @@ results.`
 
 Returns the configured facets for the current dataset.
 
-`const {items} = useFacet(name: string)`
+`const {items} = useTextFacet(name: string)`
 
 Returns the facet items for the given facet.
 
