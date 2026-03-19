@@ -1,5 +1,6 @@
 import {ReactNode} from 'react';
 import classes from './Header.module.css';
+import {usePanoptes} from "hooks/index";
 
 export default function Header({branding, navigation}: { branding: ReactNode, navigation: Record<string, string> }) {
     return (
@@ -18,8 +19,11 @@ export default function Header({branding, navigation}: { branding: ReactNode, na
 }
 
 function HeaderNavigation({navigation}: { navigation: Record<string, string> }) {
+    const {translateFn} = usePanoptes();
+
     return (
-        <nav className={classes.navigation} aria-label="Main site navigation">
+        <nav className={classes.navigation}
+             aria-label={ translateFn ? translateFn('panoptes.mainSiteNavigation') : "Main site navigation"}>
             {Object.entries(navigation).map(([href, label]) =>
                 <a key={href} href={href}>{label}</a>)}
         </nav>
