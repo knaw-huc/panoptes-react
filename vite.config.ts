@@ -1,6 +1,8 @@
 import {resolve} from 'path';
 import {defineConfig} from 'vite';
-import react from '@vitejs/plugin-react';
+import react, {reactCompilerPreset} from '@vitejs/plugin-react';
+import babel from '@rolldown/plugin-babel';
+import {esmExternalRequirePlugin} from 'rolldown/plugins';
 import dts from 'vite-plugin-dts';
 
 const buildApp = process.env.BUILD_APP === 'true';
@@ -9,7 +11,11 @@ const buildApp = process.env.BUILD_APP === 'true';
 export default defineConfig({
     plugins: [
         react(),
-        (!buildApp && dts({tsconfigPath: 'tsconfig.lib.json'})),
+        babel({presets: [reactCompilerPreset()]}),
+        ...(!buildApp ? [
+            esmExternalRequirePlugin({external: ['react', 'react-dom', 'react-dom/client', 'react/jsx-runtime']}),
+            dts({tsconfigPath: 'tsconfig.lib.json'}),
+        ] : []),
     ],
     build: (buildApp ? {
         outDir: 'build',
@@ -19,10 +25,7 @@ export default defineConfig({
             formats: ['es'],
         },
         rolldownOptions: {
-            external: [
-                'react', 'react-dom', 'react-dom/client', 'react/jsx-runtime',
-                '@tanstack/react-query', '@tanstack/react-router'
-            ],
+            external: ['@tanstack/react-query', '@tanstack/react-router'],
             output: {
                 entryFileNames: '[name].js',
                 assetFileNames: 'assets/[name][extname]',

@@ -14,6 +14,13 @@ const LOREM_IPSUM = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. ' 
     'Maecenas pretium viverra metus vel lobortis. Praesent neque augue, auctor vel bibendum quis, ' +
     'rhoncus et elit. Etiam vitae sapien ut purus venenatis tempus. Sed id ornare lectus.'
 
+const YEAR_FACET_VALUES = [
+    {count: 5, start: 2009, end: 2009},
+    {count: 2, start: 2010, end: 2010},
+    {count: 9, start: 2011, end: 2011},
+    {count: 12, start: 2012, end: 2012},
+];
+
 const OCCUPATION_FACET_VALUES = [
     {value: 'Architect', count: 994},
     {value: 'Mechanical Engineer', count: 876},
@@ -488,6 +495,8 @@ function searchResolver({offset, limit}: SearchRequest) {
 
 function facetResolver({name}: FacetRequest) {
     switch (name) {
+        case 'year':
+            return HttpResponse.json(YEAR_FACET_VALUES);
         case 'occupation':
             return HttpResponse.json(OCCUPATION_FACET_VALUES);
         case 'category':
@@ -497,7 +506,7 @@ function facetResolver({name}: FacetRequest) {
 
 function facetsResolver() {
     return HttpResponse.json([
-        {type: 'range', property: 'year', name: 'Year', min: 1900, max: 2024, step: 1},
+        {type: 'range', property: 'year', name: 'Year'},
         {type: 'text', property: 'occupation', name: 'Occupation'},
         {type: 'text', property: 'category', name: 'Category'},
     ]);
