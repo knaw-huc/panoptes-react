@@ -1,4 +1,4 @@
-import {Block} from "components/blocks/BlockLoader.tsx";
+import Block from 'components/blocks/Block';
 
 export interface TitleBlock extends Block {
     type: 'title';
