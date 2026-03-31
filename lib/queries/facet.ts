@@ -4,6 +4,7 @@ export interface FacetRequest {
     name: string;
     amount: number;
     filter: string;
+    query?: string;
     sort: 'asc' | 'desc' | 'hits';
     facets: Record<string, string[]>;
 }
@@ -25,7 +26,7 @@ export interface RangeFacetResult extends FacetResult {
 
 export function getFacetQueryOptions(api: string, dataset: string, request: FacetRequest) {
     return queryOptions({
-        queryKey: ['facet', api, dataset, request.name, request.amount, request.filter, request.sort, request.facets],
+        queryKey: ['facet', api, dataset, request.name, request.amount, request.filter, request.query, request.sort, request.facets],
         staleTime: 1000 * 60 * 5, // 5 minutes
         queryFn: () => facet(api, dataset, request),
     });

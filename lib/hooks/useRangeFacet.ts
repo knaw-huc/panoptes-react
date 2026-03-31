@@ -13,6 +13,7 @@ export default function useRangeFacet(name: string): { terms: RangeFacetResult[]
         amount: 100,
         filter: '',
         sort: 'hits',
+        query: state.query,
         facets: state.facetValues,
     }));
 

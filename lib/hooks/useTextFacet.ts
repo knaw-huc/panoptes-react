@@ -38,6 +38,7 @@ export default function useTextFacet(name: string) {
         amount: 100,
         filter: textFilter || '',
         sort: sort || 'hits',
+        query: state.query,
         facets: state.facetValues,
     }));
     const facetResults = data as TextFacetResult[];
