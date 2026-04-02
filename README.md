@@ -39,6 +39,7 @@ shell when running Vite. You can also set them when running the app as a Docker 
 - `VITE_PANOPTES_DETAIL_PATH` — Route for detail page; it must include the dataset parameter `$dataset` unless the
   dataset is configured globally via VITE_PANOPTES_DATASET, and it must include the id parameter `$id`
 - `VITE_PANOPTES_DATASET` — Optional dataset identifier to use globally for all routes
+- `VITE_PANOPTES_THEME` — Optional CSS theme name to load; allowed themes are: `ineo`, `huygens`, `meertens` and `iisg`
 
 ### Mock behavior
 

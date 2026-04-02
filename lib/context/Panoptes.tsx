@@ -1,8 +1,8 @@
 import {createContext, ReactNode, FC} from 'react';
 import {RouteComponent} from '@tanstack/react-router';
+import {TranslateFn} from "@knaw-huc/faceted-search-react";
 import Search from 'components/search/Search';
 import Detail from 'components/detail/Detail';
-import {TranslateFn} from "@knaw-huc/faceted-search-react";
 import Block from 'components/blocks/Block';
 
 export interface PanoptesConfiguration {
@@ -11,6 +11,7 @@ export interface PanoptesConfiguration {
     searchPath: string;
     detailPath: string;
     dataset?: string;
+    theme?: 'ineo' | 'huygens' | 'meertens' | 'iisg';
     searchComponent: RouteComponent;
     detailComponent: RouteComponent;
     translateFn?: TranslateFn;
@@ -46,11 +47,27 @@ export default function Panoptes({configuration = {}, children}: {
             return configuration.detailPath || '/$dataset/$id';
         })(),
         dataset: configuration.dataset,
+        theme: configuration.theme && ['ineo', 'huygens', 'meertens', 'iisg'].includes(configuration.theme) ? configuration.theme : undefined,
         searchComponent: configuration.searchComponent || Search,
         detailComponent: configuration.detailComponent || Detail,
         blocks: configuration.blocks || new Map(),
         translateFn: configuration.translateFn
     };
+
+    switch (config.theme) {
+        case 'ineo':
+            import('@knaw-huc/faceted-search-react/ineo.css');
+            break;
+        case 'huygens':
+            import('@knaw-huc/faceted-search-react/huygens.css');
+            break;
+        case 'meertens':
+            import('@knaw-huc/faceted-search-react/meertens.css');
+            break;
+        case 'iisg':
+            import('@knaw-huc/faceted-search-react/iisg.css');
+            break;
+    }
 
     return (
         <PanoptesContext.Provider value={config}>

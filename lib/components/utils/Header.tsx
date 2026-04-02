@@ -1,8 +1,12 @@
 import {ReactNode} from 'react';
+import usePanoptes from 'hooks/usePanoptes';
 import classes from './Header.module.css';
-import {usePanoptes} from "hooks/index";
 
-export default function Header({branding, navigation}: { branding: ReactNode, navigation: Record<string, string> }) {
+export default function Header({branding, navigation, children}: {
+    branding: ReactNode,
+    navigation: Record<string, string>,
+    children?: ReactNode,
+}) {
     return (
         <header className={classes.header}>
             <div className={classes.content}>
@@ -11,6 +15,8 @@ export default function Header({branding, navigation}: { branding: ReactNode, na
                         {branding}
                     </a>
                 </div>
+
+                {children}
 
                 <HeaderNavigation navigation={navigation}/>
             </div>
@@ -23,7 +29,7 @@ function HeaderNavigation({navigation}: { navigation: Record<string, string> }) 
 
     return (
         <nav className={classes.navigation}
-             aria-label={ translateFn ? translateFn('panoptes.mainSiteNavigation') : "Main site navigation"}>
+             aria-label={translateFn ? translateFn('panoptes.mainSiteNavigation') : "Main site navigation"}>
             {Object.entries(navigation).map(([href, label]) =>
                 <a key={href} href={href}>{label}</a>)}
         </nav>

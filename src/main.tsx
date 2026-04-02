@@ -5,8 +5,7 @@ const panoptesIsEmbedded = '$VITE_PANOPTES_IS_EMBEDDED';
 const panoptesSearchPath = '$VITE_PANOPTES_SEARCH_PATH';
 const panoptesDetailPath = '$VITE_PANOPTES_DETAIL_PATH';
 const panoptesDataset = '$VITE_PANOPTES_DATASET';
-
-import '@knaw-huc/faceted-search-react/iisg.css'
+const panoptesTheme = '$VITE_PANOPTES_THEME';
 
 const getVar = (envVariable: string): string | undefined =>
     envVariable.startsWith('$VITE_')
@@ -23,4 +22,5 @@ createPanoptesRoot(document.getElementById('root')!, {
     searchPath: getVar(panoptesSearchPath),
     detailPath: getVar(panoptesDetailPath),
     dataset: getVar(panoptesDataset),
-}).render(<PanoptesRouterProvider />);
+    theme: getVar(panoptesTheme),
+}).render(<PanoptesRouterProvider/>);
