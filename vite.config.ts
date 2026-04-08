@@ -21,7 +21,7 @@ export default defineConfig({
         outDir: 'build',
     } : {
         lib: {
-            entry: resolve(__dirname, 'lib/datasets.tsx'),
+            entry: resolve(__dirname, 'lib/index.tsx'),
             formats: ['es'],
         },
         rolldownOptions: {
