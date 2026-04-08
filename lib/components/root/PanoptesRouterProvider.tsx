@@ -4,10 +4,16 @@ import PanoptesRoot from 'components/root/PanoptesRoot';
 import Spinner from 'components/utils/Spinner';
 
 export default function PanoptesRouterProvider() {
-    const {searchPath, searchComponent, detailPath, detailComponent} = usePanoptes();
+    const {searchPath, searchComponent, detailPath, detailComponent, indexComponent} = usePanoptes();
 
     const rootRoute = createRootRoute({
         component: () => <PanoptesRoot/>
+    });
+
+    const indexRoute = createRoute({
+        path: '/',
+        getParentRoute: () => rootRoute,
+        component: indexComponent
     });
 
     const searchRoute = createRoute({
@@ -23,7 +29,7 @@ export default function PanoptesRouterProvider() {
     });
 
     const routeTree = rootRoute.addChildren([
-        searchRoute, detailRoute
+        indexRoute, searchRoute, detailRoute
     ]);
 
     const router = createRouter({

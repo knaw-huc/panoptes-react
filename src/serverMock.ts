@@ -473,11 +473,35 @@ const CATEGORY_FACET_VALUES = [
 ];
 
 export default setupWorker(
+    http.get('https://example.org/api/datasets', datasetsResolver),
     http.post<{}, SearchRequest>('https://example.org/api/datasets/example/search', async ({request}) => searchResolver(await request.json())),
     http.post<{name: string}, FacetRequest>('https://example.org/api/datasets/example/facet/:name', ({params}) => facetResolver({name: params.name} as FacetRequest)),
     http.get('https://example.org/api/datasets/example/facets', facetsResolver),
     http.get<{id: string}>('https://example.org/api/datasets/example/details/:id', ({params}) => detailsResolver(params.id)),
 );
+
+function datasetsResolver() {
+    return HttpResponse.json([
+        {
+            name: 'example1',
+            data_type: 'elasticsearch',
+            data_configuration: {
+                id_property: 'id',
+                base_url: '',
+                home_url: '/example/search'
+            }
+        },
+        {
+            name: 'example2',
+            data_type: 'elasticsearch',
+            data_configuration: {
+                id_property: 'id',
+                base_url: '',
+                home_url: '/example/search'
+            }
+        }
+    ]);
+}
 
 function searchResolver({offset, limit}: SearchRequest) {
     const items = [...Array(limit).keys()].map(i => {

@@ -3,6 +3,7 @@ import {RouteComponent} from '@tanstack/react-router';
 import {TranslateFn} from "@knaw-huc/faceted-search-react";
 import Search from 'components/search/Search';
 import Detail from 'components/detail/Detail';
+import DatasetsOverview from 'components/datasets/DatasetsOverview';
 import Block from 'components/blocks/Block';
 
 export interface PanoptesConfiguration {
@@ -12,6 +13,7 @@ export interface PanoptesConfiguration {
     detailPath: string;
     dataset?: string;
     theme?: 'ineo' | 'huygens' | 'meertens' | 'iisg';
+    indexComponent: RouteComponent;
     searchComponent: RouteComponent;
     detailComponent: RouteComponent;
     translateFn?: TranslateFn;
@@ -48,6 +50,7 @@ export default function Panoptes({configuration = {}, children}: {
         })(),
         dataset: configuration.dataset,
         theme: configuration.theme && ['ineo', 'huygens', 'meertens', 'iisg'].includes(configuration.theme) ? configuration.theme : undefined,
+        indexComponent: configuration.indexComponent || DatasetsOverview,
         searchComponent: configuration.searchComponent || Search,
         detailComponent: configuration.detailComponent || Detail,
         blocks: configuration.blocks || new Map(),
