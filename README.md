@@ -54,17 +54,18 @@ If `VITE_PANOPTES_URL` resolves to https://example.org, the application will sta
 To use this library, you will have to set up TanStack Query and wrap the application tree with the `Panoptes` context.
 This context contains the configuration for the application:
 
-| Parameter         | Value type       | Required? | Default value | Description                                                                                                                                               |
-|-------------------|------------------|-----------|---------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `url`             | `string`         | ✓         |               | Base URL of the Panoptes backend                                                                                                                          |
-| `isEmbedded`      | `boolean`        |           | `false`       | `true` to run in embedded mode, else `false` for rendering a menu bar at the top of the page                                                              |
-| `searchPath`      | `string`         | ✓         |               | Route for search page; it must include the dataset parameter `$dataset` unless the dataset is configured globally                                         |
-| `detailPath`      | `string`         | ✓         |               | Route for detail page; it must include the dataset parameter `$dataset` unless the dataset is configured globally, and it must include the id parameter `$id` |
-| `dataset`         | `string`         |           |               | Optional dataset identifier to use globally for all routes                                                                                                |
-| `searchComponent` | `RouteComponent` |           |               | Replace the default `Search` component with a custom React component                                                                                      |
-| `detailComponent` | `RouteComponent` |           |               | Replace the default `Detail` component with a custom React component                                                                                      |
-| `translateFn`     | `TranslateFn`    |           |               | I18N translation function                                                                                                                                 |
-| `blocks`          | `Map<string, FC<{ block: Block }>>` |           |               | Add additional `Block`s to Panoptes for customized rendering using the Block `type` as key, see [Blocks](#blocks)                                             |
+| Parameter          | Value type       | Required? | Default value | Description                                                                                                                                               |
+|--------------------|------------------|-----------|---------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `url`              | `string`         | ✓         |               | Base URL of the Panoptes backend                                                                                                                          |
+| `isEmbedded`       | `boolean`        |           | `false`       | `true` to run in embedded mode, else `false` for rendering a menu bar at the top of the page                                                              |
+| `searchPath`       | `string`         | ✓         |               | Route for search page; it must include the dataset parameter `$dataset` unless the dataset is configured globally                                         |
+| `detailPath`       | `string`         | ✓         |               | Route for detail page; it must include the dataset parameter `$dataset` unless the dataset is configured globally, and it must include the id parameter `$id` |
+| `dataset`          | `string`         |           |               | Optional dataset identifier to use globally for all routes                                                                                                |
+| `indexComponent`   | `RouteComponent` |           | `DatasetsOverview` | Replace the default `DatasetsOverview` component with a custom React component for the `/` index route                                               |
+| `searchComponent`  | `RouteComponent` |           |               | Replace the default `Search` component with a custom React component                                                                                      |
+| `detailComponent`  | `RouteComponent` |           |               | Replace the default `Detail` component with a custom React component                                                                                      |
+| `translateFn`      | `TranslateFn`    |           |               | I18N translation function                                                                                                                                 |
+| `blocks`           | `Map<string, FC<{ block: Block }>>` |           |               | Add additional `Block`s to Panoptes for customized rendering using the Block `type` as key, see [Blocks](#blocks)                                    |
 
 You can use the `createPanoptesRoot` helper as an alternative for
 `createRoot` ([see React docs](https://react.dev/reference/react-dom/client/createRoot)) to create a root element for
@@ -74,7 +75,11 @@ provider for you in [Strict Mode](https://react.dev/reference/react/StrictMode).
 In addition to TanStack Query, the library also requires TanStack Router for client-side routing. You can set up the
 `RouterProvider` yourself or use the `PanoptesRouterProvider` component provided by this library. The
 `PanoptesRouterProvider` will configure the application routes based on the configuration provided in the Panoptes
-context.
+context. It registers three routes:
+
+- `/` — index route, rendered by `indexComponent` (defaults to `DatasetsOverview`, a dataset listing page)
+- `searchPath` — search route, rendered by `searchComponent`
+- `detailPath` — detail route, rendered by `detailComponent`
 
 Example setup:
 
@@ -120,6 +125,7 @@ If `translateFn` is not provided, all components fall back to hardcoded English 
 | `panoptes.yes` | `Yes` |
 | `panoptes.no` | `No` |
 | `panoptes.mainSiteNavigation` | `Main site navigation` |
+| `panoptes.available-datasets` | `Available datasets` |
 
 The search interface (facets, pagination, filters, etc.) is powered by `@knaw-huc/faceted-search-react`, which manages its own translation keys (e.g. `search.*`, `filter.*`, `facet.*`, `pagination.*`). The same `translateFn` is forwarded to it automatically. When no function is provided, `faceted-search-react` auto-detects the browser language and supports English (en) and Dutch (nl), falling back to English for other locales.
 
@@ -153,6 +159,22 @@ Returns the configured facets for the current dataset.
 `const {items} = useTextFacet(name: string)`
 
 Returns the facet items for the given facet.
+
+`const {data: datasets} = useDatasets()`
+
+Returns the list of all datasets registered with the Panoptes backend. Each `Dataset` has the following shape:
+
+```ts
+interface Dataset {
+    name: string;
+    data_type: string;
+    data_configuration: {
+        id_property: string;
+        base_url: string;
+        home_url: string;
+    };
+}
+```
 
 `const details = useDetails()`
 
