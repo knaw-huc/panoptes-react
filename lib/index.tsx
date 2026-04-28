@@ -5,6 +5,7 @@ import {Panoptes, PanoptesConfiguration} from 'context/index';
 import '@knaw-huc/faceted-search-react/style.css';
 
 export * from 'components/root';
+export * from 'components/datasets';
 export * from 'components/utils';
 export * from 'components/blocks';
 export * from 'context/index';
