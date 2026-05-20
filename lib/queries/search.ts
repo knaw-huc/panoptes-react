@@ -15,8 +15,9 @@ export interface SearchResponse {
 export interface SearchResponseItem {
     id: string;
     title: string;
-    description: string;
-    tags: string[];
+    description?: string;
+    iiifManifest?: string;
+    tags?: string[];
 }
 
 export function getSearchQueryOptions(api: string, dataset: string, request: SearchRequest) {

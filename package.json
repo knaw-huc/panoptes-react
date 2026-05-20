@@ -32,7 +32,10 @@
     "create-panoptes": "./setup/create-panoptes.ts"
   },
   "dependencies": {
-    "@knaw-huc/faceted-search-react": "^0.0.13",
+    "@iiif/helpers": "^1.5.9",
+    "@iiif/parser": "^2.2.10",
+    "@knaw-huc/faceted-search-react": "^0.0.14",
+    "dompurify": "^3.4.5",
     "msw": "^2.12.8",
     "react-error-boundary": "^6.1.0",
     "yargs": "^18.0.0"
@@ -53,9 +56,9 @@
     "@types/node": "^25.5.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
+    "@types/yargs": "^17.0.35",
     "@vitejs/plugin-react": "^6.0.1",
     "babel-plugin-react-compiler": "^1.0.0",
-    "@types/yargs": "^17.0.35",
     "eslint": "^9.39.4",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.5.2",
