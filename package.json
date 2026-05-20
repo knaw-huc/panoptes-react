@@ -32,8 +32,6 @@
     "create-panoptes": "./setup/create-panoptes.ts"
   },
   "dependencies": {
-    "@iiif/helpers": "^1.5.9",
-    "@iiif/parser": "^2.2.10",
     "@knaw-huc/faceted-search-react": "^0.0.14",
     "dompurify": "^3.4.5",
     "msw": "^2.12.8",

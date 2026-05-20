@@ -1,16 +1,16 @@
+import {ReactNode} from 'react';
 import DOMPurify from 'dompurify';
 import classes from './ResultCard.module.css';
-import {BlockLoader} from "components/blocks";
 
 export interface ResultCardProps {
     title: string;
     link: string;
     description?: string;
-    iiifManifest?: string;
     tags?: string[];
+    thumbnail?: ReactNode;
 }
 
-export default function ResultCard({title, link, description, iiifManifest, tags}: ResultCardProps) {
+export default function ResultCard({title, link, description, tags, thumbnail}: ResultCardProps) {
     return (
         <li className={classes.card}>
             <a href={link} className={classes.link}>
@@ -18,10 +18,9 @@ export default function ResultCard({title, link, description, iiifManifest, tags
                     <h3>{title}</h3>
                 </div>
 
-                {(description || iiifManifest || tags) && <div className={classes.body}>
-                    {/* TODO: Ugly fix for now to render iiifManifest */}
-                    {iiifManifest && <div className={classes.thumbnail}>
-                        <BlockLoader block={{type: 'iiifImage', value: {manifestUri: iiifManifest, width: 200}}}/>
+                {(description || thumbnail || tags) && <div className={classes.body}>
+                    {thumbnail && <div className={classes.thumbnail}>
+                        {thumbnail}
                     </div>}
 
                     {(description || tags) && <div className={classes.main}>
