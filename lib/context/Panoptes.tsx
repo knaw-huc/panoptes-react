@@ -3,9 +3,11 @@ import {RouteComponent} from '@tanstack/react-router';
 import {TranslateFn} from "@knaw-huc/faceted-search-react";
 import Search from 'components/search/Search';
 import Detail from 'components/detail/Detail';
+import ResultCard from 'components/search/ResultCard';
 import Block from 'components/blocks/Block';
+import {SearchResponseItem} from 'queries/search';
 
-export interface PanoptesConfiguration {
+export interface PanoptesConfiguration<S extends SearchResponseItem = SearchResponseItem, B extends Block = Block> {
     url: string;
     isEmbedded: boolean;
     searchPath: string;
@@ -14,17 +16,22 @@ export interface PanoptesConfiguration {
     theme?: 'ineo' | 'huygens' | 'meertens' | 'iisg';
     searchComponent: RouteComponent;
     detailComponent: RouteComponent;
+    resultCardRenderer: (result: S, link: string) => ReactNode;
     translateFn?: TranslateFn;
-    blocks: Map<string, FC<{ block: Block }>>;
+    blocks: Map<string, FC<{ block: B }>>;
 }
 
-export const PanoptesContext = createContext<PanoptesConfiguration | null>(null);
+export const PanoptesContext = createContext<PanoptesConfiguration<any, any> | null>(null);
 
-export default function Panoptes({configuration = {}, children}: {
-    configuration: Partial<PanoptesConfiguration>;
+export default function Panoptes<S extends SearchResponseItem = SearchResponseItem, B extends Block = Block>
+({
+     configuration = {},
+     children
+ }: {
+    configuration: Partial<PanoptesConfiguration<S, B>>;
     children: ReactNode;
 }) {
-    const config: PanoptesConfiguration = {
+    const config: PanoptesConfiguration<S, B> = {
         url: configuration.url || '/',
         isEmbedded: configuration.isEmbedded || false,
         searchPath: (() => {
@@ -50,6 +57,8 @@ export default function Panoptes({configuration = {}, children}: {
         theme: configuration.theme && ['ineo', 'huygens', 'meertens', 'iisg'].includes(configuration.theme) ? configuration.theme : undefined,
         searchComponent: configuration.searchComponent || Search,
         detailComponent: configuration.detailComponent || Detail,
+        resultCardRenderer: configuration.resultCardRenderer ||
+            ((result, link) => <ResultCard {...result} link={link}/>),
         blocks: configuration.blocks || new Map(),
         translateFn: configuration.translateFn
     };
