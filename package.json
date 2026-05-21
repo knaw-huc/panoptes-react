@@ -32,7 +32,7 @@
     "create-panoptes": "./setup/create-panoptes.ts"
   },
   "dependencies": {
-    "@knaw-huc/faceted-search-react": "^0.0.14",
+    "@knaw-huc/faceted-search-react": "^0.0.15",
     "dompurify": "^3.4.5",
     "msw": "^2.12.8",
     "react-error-boundary": "^6.1.0",

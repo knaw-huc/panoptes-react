@@ -16,7 +16,6 @@ export interface SearchResponseItem {
     id: string;
     title: string;
     description?: string;
-    iiifManifest?: string;
     tags?: string[];
 }
 
