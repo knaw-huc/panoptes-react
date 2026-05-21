@@ -21,13 +21,17 @@ export interface PanoptesConfiguration<S extends SearchResponseItem = SearchResp
     blocks: Map<string, FC<{ block: B }>>;
 }
 
-export const PanoptesContext = createContext<PanoptesConfiguration | null>(null);
+export const PanoptesContext = createContext<PanoptesConfiguration<any, any> | null>(null);
 
-export default function Panoptes({configuration = {}, children}: {
-    configuration: Partial<PanoptesConfiguration>;
+export default function Panoptes<S extends SearchResponseItem = SearchResponseItem, B extends Block = Block>
+({
+     configuration = {},
+     children
+ }: {
+    configuration: Partial<PanoptesConfiguration<S, B>>;
     children: ReactNode;
 }) {
-    const config: PanoptesConfiguration = {
+    const config: PanoptesConfiguration<S, B> = {
         url: configuration.url || '/',
         isEmbedded: configuration.isEmbedded || false,
         searchPath: (() => {
