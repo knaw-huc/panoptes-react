@@ -1,6 +1,6 @@
 import {useSearchState} from '@knaw-huc/faceted-search-react';
 import {useSuspenseQuery} from '@tanstack/react-query';
-import {getFacetQueryOptions, RangeFacetResult} from 'queries/facet';
+import {getFacetQueryOptions, type RangeFacetResult} from 'queries/facet';
 import useDataset from 'hooks/useDataset';
 import usePanoptes from 'hooks/usePanoptes';
 

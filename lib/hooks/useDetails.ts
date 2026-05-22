@@ -1,5 +1,5 @@
-import {useSuspenseQuery, UseSuspenseQueryResult} from '@tanstack/react-query';
-import {DetailsResponse, getDetailsQueryOptions} from 'queries/details';
+import {useSuspenseQuery, type UseSuspenseQueryResult} from '@tanstack/react-query';
+import {type DetailsResponse, getDetailsQueryOptions} from 'queries/details';
 import usePanoptes from 'hooks/usePanoptes';
 import useDataset from 'hooks/useDataset';
 

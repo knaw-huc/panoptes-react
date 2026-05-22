@@ -6,8 +6,8 @@ import {
     HookedFilterFacet,
     HookedFilterFacetItems
 } from '@knaw-huc/faceted-search-react';
-import {Facet, TextFacet, RangeFacet, HistogramFacet} from 'queries/facets';
 import {useFacets, useTextFacet, useRangeFacet} from 'hooks/index';
+import type {Facet, TextFacet, RangeFacet, HistogramFacet} from 'queries/facets';
 
 export default function Facets() {
     const {data: facets} = useFacets();

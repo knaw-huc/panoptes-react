@@ -1,9 +1,12 @@
 import {useQueryClient} from '@tanstack/react-query';
-import {SearchResults, SearchState, Facets, getReadableRange} from '@knaw-huc/faceted-search-react';
+import {getReadableRange} from '@knaw-huc/faceted-search-react';
 import useFacets from 'hooks/useFacets';
 import usePanoptes from 'hooks/usePanoptes';
-import {Facet} from 'queries/facets';
-import {fetchSearch, SearchResponseItem} from 'queries/search';
+import {fetchSearch} from 'queries/search';
+
+import type {SearchResults, SearchState, Facets} from '@knaw-huc/faceted-search-react';
+import type {Facet} from 'queries/facets';
+import type {SearchResponseItem} from 'queries/search';
 
 function getValueRenderer(facet: Facet): ((value: string, valueLabel?: string) => string) | undefined {
     switch (facet.type) {

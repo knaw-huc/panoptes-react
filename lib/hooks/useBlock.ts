@@ -1,5 +1,5 @@
-import {FC, lazy} from 'react';
-import Block from 'components/blocks/Block';
+import {type FC, lazy} from 'react';
+import type Block from 'components/blocks/Block';
 import usePanoptes from 'hooks/usePanoptes';
 
 const blocks = import.meta.glob('../components/blocks/*/index.tsx') as Record<string, () => Promise<{

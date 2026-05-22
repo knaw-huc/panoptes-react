@@ -1,4 +1,4 @@
-import {ReactNode} from 'react';
+import type {ReactNode} from 'react';
 import classes from './DetailLayout.module.css';
 
 export function Root({children}: {children: ReactNode}) {

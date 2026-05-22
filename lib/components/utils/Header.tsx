@@ -1,4 +1,4 @@
-import {ReactNode} from 'react';
+import type {ReactNode} from 'react';
 import usePanoptes from 'hooks/usePanoptes';
 import classes from './Header.module.css';
 

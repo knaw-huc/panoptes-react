@@ -1,4 +1,4 @@
-import Block from 'components/blocks/Block';
+import type Block from 'components/blocks/Block';
 
 export interface TitleBlock extends Block {
     type: 'title';

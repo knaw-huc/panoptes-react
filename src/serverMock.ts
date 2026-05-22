@@ -1,8 +1,8 @@
 import {http, HttpResponse} from 'msw';
 import {setupWorker} from 'msw/browser';
 
-import {SearchRequest} from '../lib/queries/search';
-import {FacetRequest} from '../lib/queries/facet';
+import type {FacetRequest} from '../lib/queries/facet';
+import type {SearchRequest} from '../lib/queries/search';
 
 const LOREM_IPSUM = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. ' +
     'Etiam venenatis lobortis nunc quis vehicula. Mauris efficitur, odio ut eleifend tempus, ' +

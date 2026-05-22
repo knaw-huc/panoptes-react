@@ -1,10 +1,13 @@
-import {ReactNode, StrictMode} from 'react';
-import {Root, Container, createRoot} from 'react-dom/client';
+import {StrictMode} from 'react';
+import {createRoot} from 'react-dom/client';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
-import {Panoptes, PanoptesConfiguration} from 'context/index';
+import {Panoptes, type PanoptesConfiguration} from 'context/index';
 import '@knaw-huc/faceted-search-react/style.css';
-import {SearchResponseItem} from "./queries/search.ts";
-import Block from "./components/blocks/Block.ts";
+
+import type {ReactNode} from 'react';
+import type {Root, Container} from 'react-dom/client';
+import type Block from './components/blocks/Block';
+import type {SearchResponseItem} from './queries/search';
 
 export * from 'components/root';
 export * from 'components/utils';

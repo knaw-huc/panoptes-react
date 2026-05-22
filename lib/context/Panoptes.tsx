@@ -1,11 +1,13 @@
-import {createContext, ReactNode, FC} from 'react';
-import {RouteComponent} from '@tanstack/react-router';
-import {TranslateFn} from "@knaw-huc/faceted-search-react";
+import {createContext} from 'react';
 import Search from 'components/search/Search';
 import Detail from 'components/detail/Detail';
 import ResultCard from 'components/search/ResultCard';
-import Block from 'components/blocks/Block';
-import {SearchResponseItem} from 'queries/search';
+
+import type {ReactNode, FC} from 'react';
+import type {RouteComponent} from '@tanstack/react-router';
+import type {TranslateFn} from '@knaw-huc/faceted-search-react';
+import type Block from 'components/blocks/Block';
+import type {SearchResponseItem} from 'queries/search';
 
 export interface PanoptesConfiguration<S extends SearchResponseItem = SearchResponseItem, B extends Block = Block> {
     url: string;

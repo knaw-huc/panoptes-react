@@ -2,7 +2,7 @@ import {HookedResultsView} from '@knaw-huc/faceted-search-react';
 import {useRouter} from '@tanstack/react-router';
 import useDataset from 'hooks/useDataset';
 import usePanoptes from 'hooks/usePanoptes';
-import {SearchResponseItem} from 'queries/search';
+import type {SearchResponseItem} from 'queries/search';
 
 export default function Results() {
     const router = useRouter();

@@ -1,12 +1,12 @@
 import {useEffect} from 'react';
 import {
-    FilterFacetItem,
+    type FilterFacetItem,
     useHookedFilterFacet,
     useUpdateFacetValueLabels,
     useSearchState
 } from '@knaw-huc/faceted-search-react';
 import {useSuspenseQuery} from '@tanstack/react-query';
-import {getFacetQueryOptions, TextFacetResult} from 'queries/facet';
+import {getFacetQueryOptions, type TextFacetResult} from 'queries/facet';
 import useDataset from 'hooks/useDataset';
 import usePanoptes from 'hooks/usePanoptes';
 

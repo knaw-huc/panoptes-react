@@ -1,6 +1,6 @@
 import {useMemo} from 'react';
-import Block from 'components/blocks/Block';
-import {CmdiRecord, mapCmdiRecord} from 'components/blocks/cmdi/cmdi';
+import type Block from 'components/blocks/Block';
+import {type CmdiRecord, mapCmdiRecord} from 'components/blocks/cmdi/cmdi';
 import PropertyList from 'components/blocks/list/PropertyList';
 
 export interface CmdiBlock extends Block {

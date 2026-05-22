@@ -1,4 +1,4 @@
-import {createPanoptesRoot, PanoptesRouterProvider} from '../lib';
+import {createPanoptesRoot, PanoptesRouterProvider, type PanoptesConfiguration} from '../lib';
 
 const panoptesUrl = '$VITE_PANOPTES_URL';
 const panoptesIsEmbedded = '$VITE_PANOPTES_IS_EMBEDDED';
@@ -22,5 +22,5 @@ createPanoptesRoot(document.getElementById('root')!, {
     searchPath: getVar(panoptesSearchPath),
     detailPath: getVar(panoptesDetailPath),
     dataset: getVar(panoptesDataset),
-    theme: getVar(panoptesTheme),
+    theme: getVar(panoptesTheme) as PanoptesConfiguration['theme'],
 }).render(<PanoptesRouterProvider/>);
