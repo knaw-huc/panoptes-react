@@ -3,7 +3,7 @@ import {defineConfig} from 'vite';
 import react, {reactCompilerPreset} from '@vitejs/plugin-react';
 import babel from '@rolldown/plugin-babel';
 import {esmExternalRequirePlugin} from 'rolldown/plugins';
-import dts from 'vite-plugin-dts';
+import dts from 'unplugin-dts/vite';
 
 const buildApp = process.env.BUILD_APP === 'true';
 
