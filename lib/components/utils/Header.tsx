@@ -35,14 +35,14 @@ function HeaderNavigation({navigation}: { navigation: NavItem[] }) {
             {navigation.map(item => {
                 const type = item.href.startsWith('/') ? 'local' : 'external';
 
+                const text = (item.labelKey && translateFn) ? translateFn(item.labelKey) : item.label;
 
-                
                 if (type == "local") {
-                    return <Link to={item.href}>{item.label}</Link>
+                    return <Link to={item.href}>{text}</Link>
                 }
                 
                 if (type == "external") {
-                    return <a key={item.href} href={item.href}>{item.label}</a>
+                    return <a key={item.href} href={item.href}>{text}</a>
                 }
             })}
         </nav>
