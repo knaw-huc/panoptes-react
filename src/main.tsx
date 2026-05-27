@@ -1,3 +1,4 @@
+import {createRoute} from '@tanstack/react-router';
 import {createPanoptesRoot, PanoptesRouterProvider, type PanoptesConfiguration} from '../lib';
 
 const panoptesUrl = '$VITE_PANOPTES_URL';
@@ -23,4 +24,16 @@ createPanoptesRoot(document.getElementById('root')!, {
     detailPath: getVar(panoptesDetailPath),
     dataset: getVar(panoptesDataset),
     theme: getVar(panoptesTheme) as PanoptesConfiguration['theme'],
+    routes: (rootRoute) => [
+        createRoute({
+            path: '/about',
+            getParentRoute: () => rootRoute,
+            component: () => (
+                <div>
+                    <h2>About</h2>
+                    <p>Custom page added by the host application.</p>
+                </div>
+            ),
+        }),
+    ],
 }).render(<PanoptesRouterProvider/>);
