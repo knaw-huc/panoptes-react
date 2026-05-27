@@ -7,7 +7,7 @@ import usePanoptes from 'hooks/usePanoptes';
 import classes from './PanoptesRoot.module.css';
 
 export default function PanoptesRoot() {
-    const {isEmbedded} = usePanoptes();
+    const {isEmbedded, branding, navItems} = usePanoptes();
 
     if (isEmbedded) {
         return <PanoptesOutlet/>;
@@ -15,7 +15,7 @@ export default function PanoptesRoot() {
 
     return (
         <div className={classes.root}>
-            <Header branding="Panoptes" navigation={{'/': 'Home'}}/>
+            <Header branding={branding} navigation={navItems}/>
             <PanoptesOutlet/>
         </div>
     );

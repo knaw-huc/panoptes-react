@@ -11,11 +11,19 @@ import type {SearchResponseItem} from 'queries/search';
 
 export type PanoptesRoutesFactory = (rootRoute: AnyRoute) => AnyRoute[];
 
+export interface NavItem {
+    href: string;
+    label: string;
+    labelKey?: string;
+}
+
 export interface PanoptesConfiguration<S extends SearchResponseItem = SearchResponseItem, B extends Block = Block> {
     url: string;
     isEmbedded: boolean;
     searchPath: string;
     detailPath: string;
+    branding: string;
+    navItems: NavItem[];
     dataset?: string;
     theme?: 'ineo' | 'huygens' | 'meertens' | 'iisg';
     searchComponent: RouteComponent;
@@ -59,6 +67,11 @@ export default function Panoptes<S extends SearchResponseItem = SearchResponseIt
             return configuration.detailPath || '/$dataset/$id';
         })(),
         dataset: configuration.dataset,
+        branding: configuration.branding ? configuration.branding : 'Panoptes',
+        navItems: configuration.navItems ? configuration.navItems : [{
+            label: "Home",
+            href: "/"
+        }],
         theme: configuration.theme && ['ineo', 'huygens', 'meertens', 'iisg'].includes(configuration.theme) ? configuration.theme : undefined,
         searchComponent: configuration.searchComponent || Search,
         detailComponent: configuration.detailComponent || Detail,
