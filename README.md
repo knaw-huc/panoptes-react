@@ -68,6 +68,7 @@ This context contains the configuration for the application:
 | `resultCardRenderer` | `(result: S extends SearchResponseItem, link: string) => ReactNode` |           |                                  | Replace the default result card render function with a custom render function                                                                                 |
 | `translateFn`        | `TranslateFn`                                                       |           |                                  | I18N translation function                                                                                                                                     |
 | `blocks`             | `Map<string, FC<{ block: B extends Block }>>`                       |           |                                  | Add additional `Block`s to Panoptes for customized rendering using the Block `type` as key, see [Blocks](#blocks)                                             |
+| `routes`             | `(rootRoute: AnyRoute) => AnyRoute[]`                               |           |                                  | Factory returning additional TanStack Router routes to register alongside the built-in search and detail routes                                               |
 
 You can use the `createPanoptesRoot` helper as an alternative for
 `createRoot` ([see React docs](https://react.dev/reference/react-dom/client/createRoot)) to create a root element for

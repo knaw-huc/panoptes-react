@@ -4,10 +4,12 @@ import Detail from 'components/detail/Detail';
 import ResultCard from 'components/search/ResultCard';
 
 import type {ReactNode, FC} from 'react';
-import type {RouteComponent} from '@tanstack/react-router';
+import type {AnyRoute, RouteComponent} from '@tanstack/react-router';
 import type {TranslateFn} from '@knaw-huc/faceted-search-react';
 import type Block from 'components/blocks/Block';
 import type {SearchResponseItem} from 'queries/search';
+
+export type PanoptesRoutesFactory = (rootRoute: AnyRoute) => AnyRoute[];
 
 export interface NavItem {
     href: string;
@@ -29,6 +31,7 @@ export interface PanoptesConfiguration<S extends SearchResponseItem = SearchResp
     resultCardRenderer: (result: S, link: string) => ReactNode;
     translateFn?: TranslateFn;
     blocks: Map<string, FC<{ block: B }>>;
+    routes?: PanoptesRoutesFactory;
 }
 
 export const PanoptesContext = createContext<PanoptesConfiguration<any, any> | null>(null);
@@ -75,7 +78,8 @@ export default function Panoptes<S extends SearchResponseItem = SearchResponseIt
         resultCardRenderer: configuration.resultCardRenderer ||
             ((result, link) => <ResultCard {...result} link={link}/>),
         blocks: configuration.blocks || new Map(),
-        translateFn: configuration.translateFn
+        translateFn: configuration.translateFn,
+        routes: configuration.routes
     };
 
     switch (config.theme) {
