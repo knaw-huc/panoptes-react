@@ -48,6 +48,7 @@ function RangeFacetRendering({facet}: { facet: RangeFacet }) {
         <HookedNumericRangeFacet facetKey={facet.property}
                                  min={terms[0].start as number}
                                  max={terms[terms.length - 1].end as number}
+                                 startOpen={facet.startOpen}
                                  step={1}/>
     );
 }
@@ -77,6 +78,7 @@ function HistogramFacetRendering({facet, type = 'numeric'}: { facet: HistogramFa
                                      min={terms[0].start as number}
                                      max={terms[terms.length - 1].end as number}
                                      terms={terms}
+                                     startOpen={facet.startOpen}
                                      step={1}/>
         );
     }
@@ -86,6 +88,7 @@ function HistogramFacetRendering({facet, type = 'numeric'}: { facet: HistogramFa
                                      min={terms[0].start as string}
                                      max={terms[terms.length - 1].end as string}
                                      terms={terms}
+                                     startOpen={facet.startOpen}
                                      />
         );
     }
