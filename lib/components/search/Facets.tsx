@@ -55,7 +55,7 @@ function RangeFacetRendering({facet}: { facet: RangeFacet }) {
 
 function TextFacetRendering({facet}: { facet: TextFacet }) {
     return (
-        <HookedFilterFacet facetKey={facet.property}>
+        <HookedFilterFacet startOpen={facet.startOpen} facetKey={facet.property}>
             <TextFacetItemsRendering name={facet.property}/>
         </HookedFilterFacet>
     );
