@@ -149,6 +149,13 @@ Returns the configuration object from Panoptes. See [Setup](#setup) for the avai
 
 Returns the dataset and the identifier for the current route.
 
+`const {data: datasets} = useDatasets()`
+
+Returns the list of datasets available on the Panoptes backend. Each `Dataset` has a `name`, a `data_type` and a
+`data_configuration` (with `id_property`, `base_url` and `home_url`). This is a suspense query, so wrap the consuming
+component in a `<Suspense>` boundary. You can pass a custom configuration type to extend `DatasetConfiguration`:
+`useDatasets<MyConfiguration>()`.
+
 `const {searchFn, facets, pageSize} = useSearch(dataset: string)`
 
 Handles search functionality for the given dataset. Returns a `searchFn` function that can be used to fetch results,
