@@ -45,7 +45,7 @@ export default function Panoptes<S extends SearchResponseItem = SearchResponseIt
     children: ReactNode;
 }) {
     const config: PanoptesConfiguration<S, B> = {
-        url: configuration.url || '/',
+        url: configuration.url || '',
         isEmbedded: configuration.isEmbedded || false,
         searchPath: (() => {
             if (configuration.searchPath && !configuration.searchPath.includes('$dataset') && !configuration.dataset) {
