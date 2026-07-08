@@ -67,6 +67,7 @@ This context contains the configuration for the application:
 | `detailComponent`    | `RouteComponent`                                                    |           |                                  | Replace the default `Detail` component with a custom React component                                                                                          |
 | `resultCardRenderer` | `(result: S extends SearchResponseItem, link: string) => ReactNode` |           |                                  | Replace the default result card render function with a custom render function                                                                                 |
 | `translateFn`        | `TranslateFn`                                                       |           |                                  | I18N translation function                                                                                                                                     |
+| `locale`             | `string \| Intl.Locale`                                             |           |                                  | Locale forwarded to `@knaw-huc/faceted-search-react` for locale-aware formatting (e.g. numbers, dates)                                                        |
 | `blocks`             | `Map<string, FC<{ block: B extends Block }>>`                       |           |                                  | Add additional `Block`s to Panoptes for customized rendering using the Block `type` as key, see [Blocks](#blocks)                                             |
 | `routes`             | `(rootRoute: AnyRoute) => AnyRoute[]`                               |           |                                  | Factory returning additional TanStack Router routes to register alongside the built-in search and detail routes                                               |
 
@@ -131,6 +132,9 @@ The search interface (facets, pagination, filters, etc.) is powered by `@knaw-hu
 its own translation keys (e.g. `search.*`, `filter.*`, `facet.*`, `pagination.*`). The same `translateFn` is forwarded
 to it automatically. When no function is provided, `faceted-search-react` auto-detects the browser language and supports
 English (en) and Dutch (nl), falling back to English for other locales.
+
+You can also provide an optional `locale` (a `string` or `Intl.Locale`) in the Panoptes configuration. It is forwarded
+to `faceted-search-react` for locale-aware formatting and defaults to `en` when not provided.
 
 ### Customization
 
