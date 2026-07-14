@@ -1,6 +1,6 @@
 {
   "name": "@knaw-huc/panoptes-react",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -32,7 +32,7 @@
     "create-panoptes": "./setup/create-panoptes.ts"
   },
   "dependencies": {
-    "@knaw-huc/faceted-search-react": "^0.0.15",
+    "@knaw-huc/faceted-search-react": "^0.0.16",
     "dompurify": "^3.4.5",
     "msw": "^2.12.8",
     "react-error-boundary": "^6.1.0",

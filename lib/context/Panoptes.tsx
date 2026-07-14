@@ -30,6 +30,7 @@ export interface PanoptesConfiguration<S extends SearchResponseItem = SearchResp
     detailComponent: RouteComponent;
     resultCardRenderer: (result: S, link: string) => ReactNode;
     translateFn?: TranslateFn;
+    locale?: string | Intl.Locale;
     blocks: Map<string, FC<{ block: B }>>;
     routes?: PanoptesRoutesFactory;
 }
@@ -79,6 +80,7 @@ export default function Panoptes<S extends SearchResponseItem = SearchResponseIt
             ((result, link) => <ResultCard {...result} link={link}/>),
         blocks: configuration.blocks || new Map(),
         translateFn: configuration.translateFn,
+        locale: configuration.locale,
         routes: configuration.routes
     };
 

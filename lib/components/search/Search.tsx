@@ -9,10 +9,10 @@ import usePanoptes from "hooks/usePanoptes.ts";
 export default function Search() {
     const [dataset] = useDataset('search');
     const {searchFn, facets, pageSize} = useSearch(dataset);
-    const {translateFn} = usePanoptes();
+    const {translateFn, locale} = usePanoptes();
 
     return (
-        <FacetedSearch facets={facets} searchFn={searchFn} pageSize={pageSize} translate={translateFn}>
+        <FacetedSearch facets={facets} searchFn={searchFn} pageSize={pageSize} translate={translateFn} locale={locale}>
             <div className={classes.search}>
                 <SearchFacets/>
                 <SearchResults/>
