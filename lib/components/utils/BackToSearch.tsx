@@ -7,7 +7,7 @@ import classes from './BackToSearch.module.css';
 export default function BackToSearch() {
     const router = useRouter();
     const {searchPath} = usePanoptes();
-    const [dataset] = useDataset('detail');
+    const [dataset] = useDataset();
 
     const handleBack = () => {
         if (router.history.length > 1) {

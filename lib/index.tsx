@@ -15,6 +15,7 @@ export * from 'components/search';
 export * from 'components/blocks';
 export * from 'context/index';
 export * from 'hooks/index';
+export * from 'queries/index';
 
 export function createPanoptesRoot<S extends SearchResponseItem = SearchResponseItem, B extends Block = Block>
 (container: Container, configuration: Partial<PanoptesConfiguration<S, B>> = {}, queryClient?: QueryClient): Root {

@@ -33,7 +33,7 @@ async function resolveResource(api: string, dataset: string, resource: string): 
 
 export default function useResolveResource(value: string): UseSuspenseQueryResult<ResolveResourceResponse> {
     const {url} = usePanoptes();
-    const [dataset] = useDataset('detail');
+    const [dataset] = useDataset();
 
     return useSuspenseQuery(getResolveResourceQueryOptions(url, dataset, value));
 }

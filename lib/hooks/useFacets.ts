@@ -5,7 +5,7 @@ import useDataset from 'hooks/useDataset';
 
 export default function useFacets() {
     const {url} = usePanoptes();
-    const [dataset] = useDataset('search');
+    const [dataset] = useDataset();
 
     return useSuspenseQuery(getFacetsQueryOptions(url, dataset));
 }

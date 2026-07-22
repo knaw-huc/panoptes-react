@@ -1,15 +1,35 @@
-import {FacetedSearch, HookedSelectedFacets, HookedPagination} from '@knaw-huc/faceted-search-react';
+import {FacetedSearch, HookedSelectedFacets, HookedPagination, getReadableRange} from '@knaw-huc/faceted-search-react';
 import useSearch from 'hooks/useSearch';
+import useFacets from 'hooks/useFacets';
 import useDataset from 'hooks/useDataset';
+import usePanoptes from 'hooks/usePanoptes';
 import Facets from './Facets';
 import Results from './Results';
 import classes from './Search.module.css';
-import usePanoptes from "hooks/usePanoptes.ts";
+
+import type {Facets as IFacets} from '@knaw-huc/faceted-search-react';
+import type {Facet} from 'queries/facets';
+
+function getValueRenderer(facet: Facet): ((value: string, valueLabel?: string) => string) | undefined {
+    switch (facet.type) {
+        case 'range':
+            return value => getReadableRange(value, false);
+    }
+}
 
 export default function Search() {
-    const [dataset] = useDataset('search');
-    const {searchFn, facets, pageSize} = useSearch(dataset);
-    const {translateFn, locale} = usePanoptes();
+    const [dataset] = useDataset();
+    const {data: registeredFacets} = useFacets();
+    const {translateFn, locale, pageSize} = usePanoptes();
+    const searchFn = useSearch(dataset);
+
+    const facets = registeredFacets.reduce<IFacets>((acc, facet) => {
+        acc[facet.property] = {
+            label: facet.name,
+            valueRenderer: getValueRenderer(facet),
+        };
+        return acc;
+    }, {});
 
     return (
         <FacetedSearch facets={facets} searchFn={searchFn} pageSize={pageSize} translate={translateFn} locale={locale}>

@@ -1,8 +1,7 @@
 import {resolve} from 'path';
-import {defineConfig} from 'vite';
+import {defineConfig, esmExternalRequirePlugin} from 'vite';
 import react, {reactCompilerPreset} from '@vitejs/plugin-react';
 import babel from '@rolldown/plugin-babel';
-import {esmExternalRequirePlugin} from 'rolldown/plugins';
 import dts from 'unplugin-dts/vite';
 
 const buildApp = process.env.BUILD_APP === 'true';
@@ -25,7 +24,7 @@ export default defineConfig({
             formats: ['es'],
         },
         rolldownOptions: {
-            external: ['@tanstack/react-query', '@tanstack/react-router'],
+            external: ['@knaw-huc/faceted-search-react', '@tanstack/react-query', '@tanstack/react-router'],
             output: {
                 entryFileNames: '[name].js',
                 assetFileNames: 'assets/[name][extname]',

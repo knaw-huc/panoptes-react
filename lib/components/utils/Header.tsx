@@ -38,7 +38,7 @@ function HeaderNavigation({navigation}: { navigation: NavItem[] }) {
                 const text = (item.labelKey && translateFn) ? translateFn(item.labelKey) : item.label;
 
                 if (type == "local") {
-                    return <Link to={item.href}>{text}</Link>
+                    return <Link key={item.href} to={item.href}>{text}</Link>
                 }
                 
                 if (type == "external") {

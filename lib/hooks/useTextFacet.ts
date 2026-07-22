@@ -32,7 +32,7 @@ export default function useTextFacet(name: string) {
     const state = useSearchState();
     const updateFacetValueLabels = useUpdateFacetValueLabels(name);
     const {textFilter, sort} = useHookedFilterFacet();
-    const [dataset] = useDataset('search');
+    const [dataset] = useDataset();
     const {data} = useSuspenseQuery(getFacetQueryOptions(url, dataset, {
         name,
         amount: 100,

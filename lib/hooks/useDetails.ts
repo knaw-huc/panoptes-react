@@ -5,7 +5,7 @@ import useDataset from 'hooks/useDataset';
 
 export default function useDetails(): UseSuspenseQueryResult<DetailsResponse> {
     const {url} = usePanoptes();
-    const [dataset, id] = useDataset('detail');
+    const [dataset, id] = useDataset();
 
     return useSuspenseQuery(getDetailsQueryOptions(url, dataset, id!));
 }

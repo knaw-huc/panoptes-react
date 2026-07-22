@@ -6,7 +6,7 @@ import type {SearchResponseItem} from 'queries/search';
 
 export default function Results() {
     const router = useRouter();
-    const [dataset] = useDataset('search');
+    const [dataset] = useDataset();
     const {detailPath, resultCardRenderer} = usePanoptes();
 
     return (

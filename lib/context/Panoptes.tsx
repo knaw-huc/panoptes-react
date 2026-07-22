@@ -22,9 +22,10 @@ export interface PanoptesConfiguration<S extends SearchResponseItem = SearchResp
     isEmbedded: boolean;
     searchPath: string;
     detailPath: string;
+    dataset?: string;
+    pageSize: number;
     branding: string;
     navItems: NavItem[];
-    dataset?: string;
     theme?: 'ineo' | 'huygens' | 'meertens' | 'iisg';
     searchComponent: RouteComponent;
     detailComponent: RouteComponent;
@@ -68,6 +69,7 @@ export default function Panoptes<S extends SearchResponseItem = SearchResponseIt
             return configuration.detailPath || '/$dataset/$id';
         })(),
         dataset: configuration.dataset,
+        pageSize: configuration.pageSize || 10,
         branding: configuration.branding ? configuration.branding : 'Panoptes',
         navItems: configuration.navItems ? configuration.navItems : [{
             label: "Home",

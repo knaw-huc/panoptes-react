@@ -1,9 +1,9 @@
 import {useParams} from '@tanstack/react-router';
 import usePanoptes from 'hooks/usePanoptes';
 
-export default function useDataset(source: 'search' | 'detail'): [string, string | undefined] {
-    const {dataset: staticDataset, searchPath, detailPath} = usePanoptes();
-    const {dataset: urlDataset, id} = useParams({from: source === 'search' ? searchPath : detailPath});
+export default function useDataset(): [string, string | undefined] {
+    const {dataset} = usePanoptes();
+    const params = useParams({strict: false});
 
-    return [urlDataset || staticDataset, id];
+    return [dataset ?? params.dataset, params.id];
 }

@@ -1,35 +1,15 @@
 import {useQueryClient} from '@tanstack/react-query';
-import {getReadableRange} from '@knaw-huc/faceted-search-react';
-import useFacets from 'hooks/useFacets';
 import usePanoptes from 'hooks/usePanoptes';
 import {fetchSearch} from 'queries/search';
 
-import type {SearchResults, SearchState, Facets} from '@knaw-huc/faceted-search-react';
-import type {Facet} from 'queries/facets';
+import type {SearchResults, SearchState} from '@knaw-huc/faceted-search-react';
 import type {SearchResponseItem} from 'queries/search';
 
-function getValueRenderer(facet: Facet): ((value: string, valueLabel?: string) => string) | undefined {
-    switch (facet.type) {
-        case 'range':
-            return value => getReadableRange(value, false);
-    }
-}
-
-export default function useSearch(dataset: string) {
-    const pageSize = 10;
+export default function useSearch(dataset: string): (state: SearchState) => Promise<SearchResults<SearchResponseItem>> {
     const queryClient = useQueryClient();
-    const {url} = usePanoptes();
-    const {data: registeredFacets} = useFacets();
+    const {url, pageSize} = usePanoptes();
 
-    const facets = registeredFacets.reduce<Facets>((acc, facet) => {
-        acc[facet.property] = {
-            label: facet.name,
-            valueRenderer: getValueRenderer(facet),
-        };
-        return acc;
-    }, {});
-
-    async function searchFn(state: SearchState): Promise<SearchResults<SearchResponseItem>> {
+    return async function searchFn(state: SearchState): Promise<SearchResults<SearchResponseItem>> {
         const results = await fetchSearch(url, queryClient, dataset, {
             offset: pageSize * (state.page - 1),
             limit: pageSize,
@@ -37,7 +17,5 @@ export default function useSearch(dataset: string) {
             facets: state.facetValues,
         });
         return {items: results.items, total: results.amount};
-    }
-
-    return {searchFn, facets, pageSize};
+    };
 }

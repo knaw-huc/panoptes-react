@@ -61,6 +61,7 @@ This context contains the configuration for the application:
 | `searchPath`         | `string`                                                            | ✓         |                                  | Route for search page; it must include the dataset parameter `$dataset` unless the dataset is configured globally                                             |
 | `detailPath`         | `string`                                                            | ✓         |                                  | Route for detail page; it must include the dataset parameter `$dataset` unless the dataset is configured globally, and it must include the id parameter `$id` |
 | `dataset`            | `string`                                                            |           |                                  | Optional dataset identifier to use globally for all routes                                                                                                    |
+| `pageSize`           | `number`                                                            |           | `10`                             | The number of results per page                                                                                                                                |
 | `branding`           | `string`                                                            |           |                                  | Optional branding, this is the name of the application shown in the header bar                                                                                |
 | `navItems`           | `NavItem[]`                                                         |           | `{"label": "Home", "href": "/"}` | Configuration of the navigation items in the header. They have a `label`, `href` and optional `labelKey` (for translation).                                   |
 | `searchComponent`    | `RouteComponent`                                                    |           |                                  | Replace the default `Search` component with a custom React component                                                                                          |
@@ -149,7 +150,7 @@ other way is by providing custom `blocks` for Panoptes to render.
 
 Returns the configuration object from Panoptes. See [Setup](#setup) for the available parameters.
 
-`const [dataset, id] = useDataset(source: 'search' | 'detail')`
+`const [dataset, id] = useDataset()`
 
 Returns the dataset and the identifier for the current route.
 
@@ -160,11 +161,9 @@ Returns the list of datasets available on the Panoptes backend. Each `Dataset` h
 component in a `<Suspense>` boundary. You can pass a custom configuration type to extend `DatasetConfiguration`:
 `useDatasets<MyConfiguration>()`.
 
-`const {searchFn, facets, pageSize} = useSearch(dataset: string)`
+`const searchFn = useSearch(dataset: string)`
 
-Handles search functionality for the given dataset. Returns a `searchFn` function that can be used to fetch results,
-a `facets` object with the applied facets for the dataset. The `pageSize` parameter is the page size for the search
-results.`
+Handles search functionality for the given dataset. Returns a `searchFn` function that can be used to fetch results.
 
 `const facets = useFacets()`
 

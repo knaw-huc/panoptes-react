@@ -7,7 +7,7 @@ import usePanoptes from 'hooks/usePanoptes';
 export default function useRangeFacet(name: string): { terms: RangeFacetResult[] } {
     const {url} = usePanoptes();
     const state = useSearchState();
-    const [dataset] = useDataset('search');
+    const [dataset] = useDataset();
     const {data} = useSuspenseQuery(getFacetQueryOptions(url, dataset, {
         name,
         amount: 100,
