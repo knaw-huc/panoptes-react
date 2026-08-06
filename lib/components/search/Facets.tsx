@@ -3,10 +3,9 @@ import {
     HookedSearchFacet,
     HookedNumericRangeFacet,
     HookedDateRangeFacet,
-    HookedFilterFacet,
-    HookedFilterFacetItems
+    HookedFilterFacet
 } from '@knaw-huc/faceted-search-react';
-import {useFacets, useTextFacet, useRangeFacet} from 'hooks/index';
+import {useFacets, useTextFacetItems, useRangeFacet} from 'hooks/index';
 import type {Facet, TextFacet, RangeFacet, HistogramFacet} from 'queries/facets';
 
 export default function Facets() {
@@ -55,17 +54,9 @@ function RangeFacetRendering({facet}: { facet: RangeFacet }) {
 
 function TextFacetRendering({facet}: { facet: TextFacet }) {
     return (
-        <HookedFilterFacet startOpen={facet.startOpen} facetKey={facet.property}>
-            <TextFacetItemsRendering name={facet.property}/>
-        </HookedFilterFacet>
-    );
-}
-
-function TextFacetItemsRendering({name}: { name: string }) {
-    const {items} = useTextFacet(name);
-
-    return (
-        <HookedFilterFacetItems items={items}/>
+        <HookedFilterFacet facetKey={facet.property}
+                           startOpen={facet.startOpen}
+                           useItems={useTextFacetItems}/>
     );
 }
 
