@@ -1,21 +1,20 @@
-import {useQueryClient} from '@tanstack/react-query';
+import {useSuspenseQuery} from '@tanstack/react-query';
+import {getSearchQueryOptions} from 'queries/search';
+import useDataset from 'hooks/useDataset';
 import usePanoptes from 'hooks/usePanoptes';
-import {fetchSearch} from 'queries/search';
 
 import type {SearchResults, SearchState} from '@knaw-huc/faceted-search-react';
 import type {SearchResponseItem} from 'queries/search';
 
-export default function useSearch(dataset: string): (state: SearchState) => Promise<SearchResults<SearchResponseItem>> {
-    const queryClient = useQueryClient();
+export default function useSearch(state: SearchState): SearchResults<SearchResponseItem> {
+    const [dataset] = useDataset();
     const {url, pageSize} = usePanoptes();
+    const {data: {items, amount}} = useSuspenseQuery(getSearchQueryOptions(url, dataset, {
+        offset: pageSize * (state.page - 1),
+        limit: pageSize,
+        query: state.query || '',
+        facets: state.facetValues,
+    }));
 
-    return async function searchFn(state: SearchState): Promise<SearchResults<SearchResponseItem>> {
-        const results = await fetchSearch(url, queryClient, dataset, {
-            offset: pageSize * (state.page - 1),
-            limit: pageSize,
-            query: state.query || '',
-            facets: state.facetValues,
-        });
-        return {items: results.items, total: results.amount};
-    };
+    return {items, total: amount};
 }

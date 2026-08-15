@@ -1,7 +1,5 @@
 import {FacetedSearch, HookedSelectedFacets, HookedPagination, getReadableRange} from '@knaw-huc/faceted-search-react';
-import useSearch from 'hooks/useSearch';
 import useFacets from 'hooks/useFacets';
-import useDataset from 'hooks/useDataset';
 import usePanoptes from 'hooks/usePanoptes';
 import Facets from './Facets';
 import Results from './Results';
@@ -18,10 +16,8 @@ function getValueRenderer(facet: Facet): ((value: string, valueLabel?: string) =
 }
 
 export default function Search() {
-    const [dataset] = useDataset();
     const {data: registeredFacets} = useFacets();
     const {translateFn, locale, pageSize} = usePanoptes();
-    const searchFn = useSearch(dataset);
 
     const facets = registeredFacets.reduce<IFacets>((acc, facet) => {
         acc[facet.property] = {
@@ -32,7 +28,7 @@ export default function Search() {
     }, {});
 
     return (
-        <FacetedSearch facets={facets} searchFn={searchFn} pageSize={pageSize} translate={translateFn} locale={locale}>
+        <FacetedSearch facets={facets} pageSize={pageSize} translate={translateFn} locale={locale}>
             <div className={classes.search}>
                 <SearchFacets/>
                 <SearchResults/>

@@ -1,4 +1,4 @@
-import {QueryClient, queryOptions} from '@tanstack/react-query';
+import {queryOptions} from '@tanstack/react-query';
 
 export interface SearchRequest {
     offset: number;
@@ -25,10 +25,6 @@ export function getSearchQueryOptions(api: string, dataset: string, request: Sea
         staleTime: 1000 * 60, // 1 minute
         queryFn: () => search(api, dataset, request),
     });
-}
-
-export async function fetchSearch(api: string, queryClient: QueryClient, dataset: string, request: SearchRequest) {
-    return queryClient.fetchQuery(getSearchQueryOptions(api, dataset, request));
 }
 
 async function search(api: string, dataset: string, request: SearchRequest): Promise<SearchResponse> {
