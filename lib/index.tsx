@@ -7,7 +7,6 @@ import '@knaw-huc/faceted-search-react/style.css';
 import type {ReactNode} from 'react';
 import type {Root, Container} from 'react-dom/client';
 import type Block from './components/blocks/Block';
-import type {SearchResponseItem} from './queries/search';
 
 export * from 'components/root';
 export * from 'components/utils';
@@ -17,7 +16,7 @@ export * from 'context/index';
 export * from 'hooks/index';
 export * from 'queries/index';
 
-export function createPanoptesRoot<S extends SearchResponseItem = SearchResponseItem, B extends Block = Block>
+export function createPanoptesRoot<S extends object = object, B extends Block = Block>
 (container: Container, configuration: Partial<PanoptesConfiguration<S, B>> = {}, queryClient?: QueryClient): Root {
     const root = createRoot(container);
     queryClient ??= new QueryClient();
@@ -29,7 +28,7 @@ export function createPanoptesRoot<S extends SearchResponseItem = SearchResponse
     };
 }
 
-function PanoptesRoot<S extends SearchResponseItem = SearchResponseItem, B extends Block = Block>
+function PanoptesRoot<S extends object = object, B extends Block = Block>
 ({
      configuration,
      queryClient,

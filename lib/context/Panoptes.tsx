@@ -7,7 +7,7 @@ import type {ReactNode, FC} from 'react';
 import type {AnyRoute, RouteComponent} from '@tanstack/react-router';
 import type {TranslateFn} from '@knaw-huc/faceted-search-react';
 import type Block from 'components/blocks/Block';
-import type {SearchResponseItem} from 'queries/search';
+import type {ResultCardProps} from 'components/search/ResultCard';
 
 export type PanoptesRoutesFactory = (rootRoute: AnyRoute) => AnyRoute[];
 
@@ -17,7 +17,7 @@ export interface NavItem {
     labelKey?: string;
 }
 
-export interface PanoptesConfiguration<S extends SearchResponseItem = SearchResponseItem, B extends Block = Block> {
+export interface PanoptesConfiguration<S extends object = object, B extends Block = Block> {
     url: string;
     isEmbedded: boolean;
     searchPath: string;
@@ -38,7 +38,7 @@ export interface PanoptesConfiguration<S extends SearchResponseItem = SearchResp
 
 export const PanoptesContext = createContext<PanoptesConfiguration<any, any> | null>(null);
 
-export default function Panoptes<S extends SearchResponseItem = SearchResponseItem, B extends Block = Block>
+export default function Panoptes<S extends object = object, B extends Block = Block>
 ({
      configuration = {},
      children
@@ -79,7 +79,7 @@ export default function Panoptes<S extends SearchResponseItem = SearchResponseIt
         searchComponent: configuration.searchComponent || Search,
         detailComponent: configuration.detailComponent || Detail,
         resultCardRenderer: configuration.resultCardRenderer ||
-            ((result, link) => <ResultCard {...result} link={link}/>),
+            ((result, link) => <ResultCard {...(result as ResultCardProps)} link={link}/>),
         blocks: configuration.blocks || new Map(),
         translateFn: configuration.translateFn,
         locale: configuration.locale,

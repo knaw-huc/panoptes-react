@@ -8,4 +8,5 @@ export {default as useRangeFacet} from './useRangeFacet';
 export {default as useFacets} from './useFacets';
 export {default as usePanoptes} from './usePanoptes';
 export {default as useSearch} from './useSearch';
+export {default as useInfiniteSearch} from './useInfiniteSearch';
 export {default as useResolveResource} from './useResolveResource';
