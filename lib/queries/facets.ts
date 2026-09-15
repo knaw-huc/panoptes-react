@@ -11,6 +11,11 @@ export interface TextFacet extends Facet {
     type: 'text';
 }
 
+export interface TreeFacet extends Facet {
+    type: 'tree';
+    expand_level: number;
+}
+
 export interface RangeFacet extends Facet {
     type: 'range';
 }

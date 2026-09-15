@@ -6,7 +6,7 @@ import {
     HookedFilterFacet
 } from '@knaw-huc/faceted-search-react';
 import {useFacets, useTextFacetItems, useRangeFacet} from 'hooks/index';
-import type {Facet, TextFacet, RangeFacet, HistogramFacet} from 'queries/facets';
+import type {Facet, TextFacet, RangeFacet, HistogramFacet, TreeFacet} from 'queries/facets';
 
 export default function Facets() {
     const {data: facets} = useFacets();
@@ -28,9 +28,12 @@ function FacetRendering({facet}: { facet: Facet }) {
                 <RangeFacetRendering facet={facet as RangeFacet}/>
             );
         case 'text':
-        case 'tree':
             return (
                 <TextFacetRendering facet={facet as TextFacet}/>
+            );
+        case 'tree':
+            return (
+                <TreeFacetRendering facet={facet as TreeFacet}/>
             );
         case 'histogram':
             return (
@@ -56,6 +59,15 @@ function TextFacetRendering({facet}: { facet: TextFacet }) {
     return (
         <HookedFilterFacet facetKey={facet.property}
                            startOpen={facet.startOpen}
+                           useItems={useTextFacetItems}/>
+    );
+}
+
+function TreeFacetRendering({facet}: { facet: TreeFacet }) {
+    return (
+        <HookedFilterFacet facetKey={facet.property}
+                           startOpen={facet.startOpen}
+                           initialLevels={facet.expand_level}
                            useItems={useTextFacetItems}/>
     );
 }
