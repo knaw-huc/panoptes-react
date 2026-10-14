@@ -1,5 +1,6 @@
 import {createRoute} from '@tanstack/react-router';
-import {createPanoptesRoot, PanoptesRouterProvider, type PanoptesConfiguration} from '../lib';
+import {createPanoptesRoot, PanoptesRouterProvider, type PanoptesConfiguration} from '@knaw-huc/panoptes-react';
+import '@knaw-huc/panoptes-react/style.css';
 
 const panoptesUrl = '$VITE_PANOPTES_URL';
 const panoptesIsEmbedded = '$VITE_PANOPTES_IS_EMBEDDED';

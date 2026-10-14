@@ -1,26 +1,19 @@
-import {resolve} from 'path';
 import {defineConfig, esmExternalRequirePlugin} from 'vite';
 import react, {reactCompilerPreset} from '@vitejs/plugin-react';
 import babel from '@rolldown/plugin-babel';
 import dts from 'unplugin-dts/vite';
 
-const buildApp = process.env.BUILD_APP === 'true';
-
 // https://vite.dev/config/
 export default defineConfig({
     plugins: [
         react(),
-        babel({presets: [reactCompilerPreset()]}),
-        ...(!buildApp ? [
-            esmExternalRequirePlugin({external: ['react', 'react-dom', 'react-dom/client', 'react/jsx-runtime']}),
-            dts({tsconfigPath: 'tsconfig.lib.json'}),
-        ] : []),
+        babel({presets: [reactCompilerPreset({target: '19'})]}),
+        esmExternalRequirePlugin({external: ['react', 'react-dom', 'react-dom/client', 'react/jsx-runtime']}),
+        dts({tsconfigPath: 'tsconfig.lib.json'}),
     ],
-    build: (buildApp ? {
-        outDir: 'build',
-    } : {
+    build: {
         lib: {
-            entry: resolve(__dirname, 'lib/index.tsx'),
+            entry: 'src/index.tsx',
             formats: ['es'],
         },
         rolldownOptions: {
@@ -34,7 +27,7 @@ export default defineConfig({
                 }
             }
         }
-    }),
+    },
     resolve: {
         tsconfigPaths: true
     }
