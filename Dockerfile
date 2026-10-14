@@ -1,8 +1,8 @@
-FROM node:alpine as builder
+FROM node:alpine AS builder
 
 WORKDIR /app
-COPY . /app
-RUN npm install && npm run build:app
+COPY app /app
+RUN npm install && npm run build
 
 FROM nginx:stable-alpine
 

@@ -9,7 +9,7 @@
       "vite/client"
     ],
     "skipLibCheck": true,
-    "rootDir": "./lib",
+    "rootDir": "./src",
 
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -28,23 +28,23 @@
     /* Imports lookup locations */
     "paths": {
       "assets/*": [
-        "./lib/assets/*"
+        "./src/assets/*"
       ],
       "components/*": [
-        "./lib/components/*"
+        "./src/components/*"
       ],
       "context/*": [
-        "./lib/context/*"
+        "./src/context/*"
       ],
       "hooks/*": [
-        "./lib/hooks/*"
+        "./src/hooks/*"
       ],
       "queries/*": [
-        "./lib/queries/*"
+        "./src/queries/*"
       ]
     }
   },
   "include": [
-    "./lib"
+    "./src"
   ]
 }

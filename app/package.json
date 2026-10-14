@@ -1,0 +1,30 @@
+{
+  "name": "panoptes-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "@knaw-huc/panoptes-react": "*",
+    "@tanstack/react-query": "^5.104.2",
+    "@tanstack/react-router": "^1.170.44",
+    "msw": "^2.12.8"
+  },
+  "devDependencies": {
+    "@rolldown/plugin-babel": "^0.2.2",
+    "@types/node": "^25.9.5",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
+    "babel-plugin-react-compiler": "^1.0.0",
+    "typescript": "^6.0.3",
+    "vite": "^8.0.1"
+  },
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
+  }
+}

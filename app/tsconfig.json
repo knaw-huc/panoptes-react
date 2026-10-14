@@ -1,9 +1,15 @@
 {
   "compilerOptions": {
     "target": "es2023",
-    "lib": ["ES2023"],
-    "types": ["node"],
+    "lib": [
+      "ES2023",
+      "DOM"
+    ],
+    "types": [
+      "vite/client"
+    ],
     "skipLibCheck": true,
+    "rootDir": "./src",
 
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -11,11 +17,15 @@
     "verbatimModuleSyntax": true,
     "moduleDetection": "force",
     "noEmit": true,
+    "jsx": "react-jsx",
+    "resolveJsonModule": true,
 
     /* Linting */
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
   },
-  "include": ["vite.config.ts"]
+  "include": [
+    "./src"
+  ]
 }
